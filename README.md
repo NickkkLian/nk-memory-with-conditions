@@ -1,6 +1,6 @@
 # nk-memory-with-conditions
 
-A [Claude Code](https://code.claude.com) skill. Write agent memories that say when they hold, and keep the memory directory honest.
+An agent skill for [Claude Code](https://code.claude.com) and [OpenAI Codex](https://developers.openai.com/codex). Write agent memories that say when they hold, and keep the memory directory honest.
 
 Part of [nickkk-skills](https://github.com/NickkkLian/nickkk-skills) — skills that stop an AI coding agent's
 "done, tested, safe" from being taken on faith.
@@ -23,7 +23,7 @@ The full procedure, the boundaries and where the rules came from are in [SKILL.m
 
 ## Install
 
-Pick one of three ways. Skills load when a session starts, so open a **new** session after installing.
+Pick one of four ways: three for Claude Code, one for OpenAI Codex. Skills load when a session starts, so open a **new** session after installing.
 
 ### 1 · Terminal, one command
 
@@ -71,6 +71,26 @@ Without opening a session, the same two steps work from a shell: `claude plugin 
 6. Close the panel and start a new session.
 
 To try it for one session without installing anything: `claude --plugin-dir ./nk-memory-with-conditions` from a clone.
+
+### 4 · OpenAI Codex CLI
+
+```bash
+git clone https://github.com/NickkkLian/nk-memory-with-conditions.git ~/.agents/skills/nk-memory-with-conditions
+```
+
+1. Run the command above (for one project only, clone into `.agents/skills/nk-memory-with-conditions` inside that project).
+2. Start a new Codex session.
+3. Check it loaded, without spending a model call: `codex debug prompt-input | grep -o -- '- nk-memory-with-conditions[a-z0-9:-]*' | sort -u` prints `- nk-memory-with-conditions:nk-memory-with-conditions:`. Codex adds the `nk-memory-with-conditions:` prefix because this repository also carries a Claude Code plugin manifest. Ask for the task and the skill triggers on its own, or type `$` and pick it from the list.
+
+## Compatibility
+
+| Agent | Tested | What was checked |
+|---|---|---|
+| Claude Code (CLI 2.1.173, macOS) | yes | In a fresh project with an isolated Claude config, inside a macOS sandbox that blocked reading the tester's ~/.claude folder (settings, session history, memory), Desktop, Documents and Downloads, SSH keys and git identity, a plain request that never names the skill triggered it and it ran its bundled script. The route 2 plugin commands were also run from a shell with an isolated config: marketplace add, install, list. |
+| OpenAI Codex CLI (0.154.0-alpha.6.2, gpt-5.6-sol, low reasoning, macOS) | yes | Copied into `~/.agents/skills` of a temporary home (the folder route 4 clones into), in a fresh project, without the user's Codex config. From a plain request that never names the skill, Codex read SKILL.md, ran `scripts/memguard.py --require-conditions` on the memory folder, reported the unindexed file, the missing file and the memories without a "Holds when" line, and showed how to add a memory without rewriting the index. |
+| Cursor, Gemini CLI | no | Not tested. Their documentation says both read `~/.agents/skills`, the folder route 4 clones into; Gemini CLI asks before it activates a skill. |
+
+In the nine Codex runs that used the temporary home, every call into the skill folder's scripts/ used that folder's absolute path. Route 4 was checked separately: all ten repositories cloned from GitHub into a temporary home's `~/.agents/skills` were listed by the step 3 command. These skills' frontmatter uses only name, description, license and metadata.
 
 ## Verify
 
