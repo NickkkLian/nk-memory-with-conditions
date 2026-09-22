@@ -14,8 +14,8 @@ Checks:
      half of it is missing. Red when fewer than --headroom characters remain under --limit               → red
   C  shared directory: several sessions with the same cwd write the same memory dir; a read-modify-write of the whole
      file silently drops the other session's additions. Reported only as context (see --quiet)         → info
-  D  conditions: every memory should say when it holds ("Holds when:" / "成立条件"). Counted as a warning; red with
-     --require-conditions                                                                                → warn/red
+  D  conditions: every memory should say when it holds ("Holds when:", or one of its Chinese equivalents).
+     Counted as a warning; red with --require-conditions                                                 → warn/red
 Exit: 0 clean · 1 red · 2 selftest failed / dir not found. --quiet prints nothing unless something is red.
 The default --limit (24,985 characters = 24.4 × 1024) is a measurement from one machine (four load snapshots,
 2026-09-14: 24,917 chars loaded fully, 29,800 truncated), not a documented number. Measure yours if it matters.
