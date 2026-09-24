@@ -23,6 +23,14 @@ The full procedure, the boundaries and where the rules came from are in [SKILL.m
 2. One example is not a rule
 3. Repeated mistakes are not memory failures
 
+## Why it is built this way
+
+**The idea.** A memory is an observation made at one moment, not an eternal fact. Saved without the conditions under which it was true, it turns into a rule that outlives its cause.
+
+**Where it came from.** Own practice, 2026-07 to 2026-09: a memory written without its condition disabled a working tool; two sessions writing the same index on the same night; an index that loaded half-way with a warning nobody saw; a limit first assumed to be bytes and corrected to characters by measurement.
+
+**Evidence.** What was broken on purpose to show that the self-tests can fail is under [Verify](#verify); what was run end to end, and in which agent, is under [Compatibility](#compatibility).
+
 ## Install
 
 Pick one of four ways: three for Claude Code, one for OpenAI Codex. Skills load when a session starts, so open a **new** session after installing.
