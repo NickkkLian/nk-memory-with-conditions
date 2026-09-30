@@ -2,7 +2,8 @@
 """memguard.py — sentinel for a Claude Code auto-memory directory (MEMORY.md index + one file per memory).
 
     python3 memguard.py [--cwd PATH] [--config-dir DIR] | [--memory-dir DIR]
-                        [--limit CHARS] [--headroom CHARS] [--require-conditions] [--quiet]
+                        [--limit CHARS] [--headroom CHARS] [--line-limit LINES] [--line-headroom LINES]
+                        [--require-conditions] [--quiet]
     python3 memguard.py --selftest
 
 Resolves the memory dir the way Claude Code does: <config-dir>/projects/<cwd with "/" replaced by "-">/memory
@@ -10,8 +11,9 @@ Resolves the memory dir the way Claude Code does: <config-dir>/projects/<cwd wit
 Checks:
   A  index ↔ files: a memory file with no index line (someone's write was overwritten, or a file was added without
      its line) and an index line with no file (renamed or deleted without updating the index)           → red
-  B  headroom: MEMORY.md is loaded up to a character cap and silently truncated beyond it — the index looks complete,
-     half of it is missing. Red when fewer than --headroom characters remain under --limit               → red
+  B  headroom: MEMORY.md is loaded up to a character cap and a line cap, and silently truncated beyond either — the
+     index looks complete, the tail is missing. Red when fewer than --headroom characters remain under --limit, or
+     fewer than --line-headroom lines remain under --line-limit                                         → red
   C  shared directory: several sessions with the same cwd write the same memory dir; a read-modify-write of the whole
      file silently drops the other session's additions. Reported only as context (see --quiet)         → info
   D  conditions: every memory should say when it holds ("Holds when:", or one of its Chinese equivalents).
@@ -19,10 +21,13 @@ Checks:
 Exit: 0 clean · 1 red · 2 selftest failed / dir not found. --quiet prints nothing unless something is red.
 The default --limit (24,985 characters = 24.4 × 1024) is a measurement from one machine (four load snapshots,
 2026-09-14: 24,917 chars loaded fully, 29,800 truncated), not a documented number. Measure yours if it matters.
+The default --line-limit (200 lines) is also an observation: on 2026-09-29 Claude Code reported that a 203-line index
+was loaded only up to line 200. Whichever cap is reached first truncates the index.
 """
 import os, re, sys, tempfile, time
 
 LIMIT, HEADROOM, BUSY_MIN = 24985, 240, 30
+LINE_LIMIT, LINE_HEADROOM = 200, 5
 INDEX_RE = re.compile(r"^- \[[^\]]*\]\(([^)]+\.md)\)", re.M)
 COND_RE = re.compile(r"(?im)^(?:\*\*)?(?:holds when|valid when|applies when|成立条件)\b")
 
@@ -33,7 +38,8 @@ def memory_dir(cwd=None, config_dir=None):
     return os.path.join(cfg, "projects", cwd.replace("/", "-"), "memory")
 
 
-def check(mem, limit=LIMIT, headroom=HEADROOM, require_conditions=False, busy_min=BUSY_MIN):
+def check(mem, limit=LIMIT, headroom=HEADROOM, require_conditions=False, busy_min=BUSY_MIN,
+          line_limit=LINE_LIMIT, line_headroom=LINE_HEADROOM):
     """Returns (rc, lines, facts). Shares nothing with the CLI except this function — the selftest calls it too."""
     idx = os.path.join(mem, "MEMORY.md")
     if not os.path.isfile(idx):
@@ -42,7 +48,9 @@ def check(mem, limit=LIMIT, headroom=HEADROOM, require_conditions=False, busy_mi
     files = {f for f in os.listdir(mem) if f.endswith(".md") and f != "MEMORY.md"}
     linked = set(INDEX_RE.findall(body))
     only_file, only_idx = sorted(files - linked), sorted(linked - files)
-    out, rc, facts = [], 0, {"files": len(files), "index": len(linked), "chars": len(body), "room": limit - len(body)}
+    n_lines = len(body.splitlines())
+    out, rc, facts = [], 0, {"files": len(files), "index": len(linked), "chars": len(body), "room": limit - len(body),
+                             "lines": n_lines, "line_room": line_limit - n_lines}
     if only_file or only_idx:
         rc = 1
         out.append(f"🚨 A  index and files disagree: {len(files)} files / {len(linked)} index lines")
@@ -58,6 +66,11 @@ def check(mem, limit=LIMIT, headroom=HEADROOM, require_conditions=False, busy_mi
         out.append("     → before adding a line, move the longest index lines' text into their own files verbatim; keep one sentence in the index")
         for n, l in sorted(((len(l), l) for l in body.splitlines() if l.startswith("- [")), reverse=True)[:3]:
             out.append(f"       {n:>5} chars  {l[:70]}…")
+    if facts["line_room"] < line_headroom:
+        rc = 1
+        out.append(f"⚠️ B  MEMORY.md is {n_lines:,} lines; line cap {line_limit:,}; only {facts['line_room']:,} left")
+        out.append(f"     lines past {line_limit} are silently not loaded — the index looks complete, its last lines never load")
+        out.append("     → before adding a line, merge index lines that point to related memories, or move closed ones into a single 'closed' line")
     missing = [f for f in sorted(files) if not COND_RE.search(open(os.path.join(mem, f), encoding="utf-8", errors="replace").read())]
     facts["no_conditions"] = len(missing)
     if missing:
@@ -105,6 +118,17 @@ def selftest():
         chk(rc == 1 and any(l.startswith("⚠️ B") for l in out), "B: fewer than headroom chars left is red")
         rc, out, f = check(mem, limit=len(open(os.path.join(mem, "MEMORY.md")).read()) + 1000, headroom=240)
         chk(rc == 0, "B control: enough room is clean")
+        n = len(open(os.path.join(mem, "MEMORY.md")).read().splitlines())
+        rc, out, f = check(mem, line_limit=n + 4, line_headroom=5)
+        chk(rc == 1 and any(l.startswith("⚠️ B") and "lines" in l for l in out), "B: fewer than line-headroom lines left is red")
+        rc, out, f = check(mem, line_limit=n + 5, line_headroom=5)
+        chk(rc == 0 and f["lines"] == n, "B control: enough lines left is clean")
+        mk(mem, ["m%03d" % i for i in range(199)])
+        rc, out, f = check(mem)
+        chk(rc == 1 and f["lines"] == 200 and f["chars"] < LIMIT - HEADROOM and any("line cap 200" in l for l in out), "B: a 200-line index well under the character cap is red by the default line cap")
+        for i in range(199):
+            os.remove(os.path.join(mem, "m%03d.md" % i))
+        mk(mem, ["a", "b"])
         mk(mem, ["a", "b"], cond=False)
         rc, out, f = check(mem)
         chk(rc == 0 and f["no_conditions"] == 2 and any(l.startswith("· D") for l in out), "D: missing 'Holds when' is a warning by default")
@@ -128,23 +152,25 @@ def main(argv):
     if "--selftest" in argv or not ok:
         print(f"memguard selftest · {sum(l.startswith('  ✔') for l in lines)}/{len(lines)} passed"); print("\n".join(lines))
         return 0 if ok else 2
-    opts, i = {"cwd": None, "config-dir": None, "memory-dir": None, "limit": LIMIT, "headroom": HEADROOM}, 0
+    opts, i = {"cwd": None, "config-dir": None, "memory-dir": None, "limit": LIMIT, "headroom": HEADROOM,
+               "line-limit": LINE_LIMIT, "line-headroom": LINE_HEADROOM}, 0
     quiet, req = "--quiet" in argv, "--require-conditions" in argv
     while i < len(argv):
         a = argv[i]
         if a.startswith("--") and a[2:] in opts and i + 1 < len(argv):
-            opts[a[2:]] = int(argv[i + 1]) if a[2:] in ("limit", "headroom") else argv[i + 1]; i += 2
+            opts[a[2:]] = int(argv[i + 1]) if a[2:] in ("limit", "headroom", "line-limit", "line-headroom") else argv[i + 1]; i += 2
         else:
             i += 1
     mem = opts["memory-dir"] or memory_dir(opts["cwd"], opts["config-dir"])
-    rc, out, facts = check(mem, opts["limit"], opts["headroom"], req)
+    rc, out, facts = check(mem, opts["limit"], opts["headroom"], req,
+                           line_limit=opts["line-limit"], line_headroom=opts["line-headroom"])
     if rc == 2:
         print("\n".join(out)); return 2
     if quiet and rc == 0:
         return 0
     if not quiet:
         print(f"memguard: {mem}")
-        print(f"  {facts['files']} memory files · {facts['index']} index lines · MEMORY.md {facts['chars']:,} chars ({facts['room']:,} under the cap) · {facts['no_conditions']} without conditions")
+        print(f"  {facts['files']} memory files · {facts['index']} index lines · MEMORY.md {facts['chars']:,} chars ({facts['room']:,} under the cap), {facts['lines']:,} lines ({facts['line_room']:,} under the line cap) · {facts['no_conditions']} without conditions")
     print("\n".join(l for l in out if not (quiet and l.startswith("📌"))))
     return rc
 

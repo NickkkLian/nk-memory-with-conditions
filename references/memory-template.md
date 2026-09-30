@@ -18,4 +18,4 @@ type: user | feedback | project | reference
 
 Index line in `MEMORY.md`: `- [Title](file.md) — <hook: one clause, no summary>`
 
-Never put the memory's content in the index; the index is a table of contents with a size cap.
+Never put the memory's content in the index; the index is a table of contents with a size cap and a line cap.

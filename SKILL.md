@@ -4,7 +4,7 @@ description: Write agent memories that say when they hold, and keep the memory d
 license: MIT
 metadata:
   provenance: own practice (2026-07 to 2026-09); no external source
-  version: 0.1.0
+  version: 0.1.3
 ---
 # Memory with conditions
 
@@ -45,9 +45,11 @@ condition still holds. Memories about people and products go stale fastest; keep
 Claude Code keeps auto-memory under `<config dir>/projects/<cwd with / turned into ->/memory/`:
 `MEMORY.md` (an index, one line per memory) and one `.md` per memory. Two things about it are not obvious:
 
-- **The index is loaded up to a character cap and silently truncated.** It looks complete; the tail never
-  loads. On one machine the cap measured between 24,917 and 29,800 characters (four load snapshots, 2026-09-14);
-  the script's default of 24,985 is that measurement, not a documented number — measure yours if you get close.
+- **The index is loaded up to a character cap and a line cap, and silently truncated at whichever comes first.**
+  It looks complete; the tail never loads. On one machine the character cap measured between 24,917 and 29,800
+  characters (four load snapshots, 2026-09-14); the script's default of 24,985 is that measurement, not a documented
+  number. The line cap is 200: on 2026-09-29 a 203-line index loaded only up to line 200. A short-line index hits
+  the line cap long before the character cap — measure yours if you get close to either.
 - **The directory is keyed by cwd, not by session.** Two sessions in the same directory write the same
   files. A read-all → edit → write-all of `MEMORY.md` drops whatever the other session appended in between,
   with no error and a plausible line count.
@@ -58,21 +60,22 @@ whole index while another session may be writing; after writing, check the line 
 ## The sentinel
 
 `python3 ${CLAUDE_SKILL_DIR}/scripts/memguard.py` (uses the current directory; `--cwd`, `--config-dir`
-or `--memory-dir` to point elsewhere; `--quiet` for a session-start hook; `--require-conditions` to make
-missing conditions red; `--selftest`).
+or `--memory-dir` to point elsewhere; `--limit`/`--headroom` and `--line-limit`/`--line-headroom` to change
+the caps; `--quiet` for a session-start hook; `--require-conditions` to make missing conditions red;
+`--selftest`).
 
 | Check | Red when | What it means |
 |---|---|---|
 | A index ↔ files | a file has no index line, or a line has no file | a write was overwritten, or a rename/delete skipped the index |
-| B headroom | fewer than 240 characters remain under the cap | the next line you add may be the one that never loads |
+| B headroom | fewer than 240 characters remain under the character cap, or fewer than 5 lines under the 200-line cap | the next line you add may be the one that never loads |
 | C shared directory | (info only) ≥ 2 live sessions and recent memory writes | use append / anchored replace, not whole-file rewrites |
 | D conditions | `--require-conditions` and a memory lacks "Holds when:" | the memory will be read as a rule |
 
 ## Boundaries
 
 - It reads the directory; it cannot tell whether a condition is still true.
-- The character cap is an observation from one machine and one version; the check is worth keeping
-  because the failure mode is silent, but the number is yours to verify.
+- Both caps are observations from one machine and one version; the check is worth keeping
+  because the failure mode is silent, but the numbers are yours to verify.
 
 ## Provenance
 

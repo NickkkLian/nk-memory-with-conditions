@@ -12,7 +12,7 @@ Part of [nickkk-skills](https://github.com/NickkkLian/nickkk-skills) — skills 
 ## What it does
 
 - Template: every memory carries `**Holds when:**`, a dated why, and a checkable how-to-apply.
-- `scripts/memguard.py`: index ↔ files mismatch, headroom before the index is silently truncated, memories without conditions, and sessions that share one memory directory (same cwd).
+- `scripts/memguard.py`: index ↔ files mismatch, headroom before the index is silently truncated (a character cap and a 200-line cap), memories without conditions, and sessions that share one memory directory (same cwd).
 - Append-only and anchored-replace rules for directories several sessions write to.
 
 The full procedure, the boundaries and where the rules came from are in [SKILL.md](SKILL.md).
@@ -115,7 +115,7 @@ assertion, without a traceback; the unmutated control stayed green.
 ## Limits
 
 - It reads the directory; it cannot tell whether a condition is still true.
-- The character cap is an observation from one machine and one version; the check is worth keeping because the failure mode is silent, but the number is yours to verify.
+- Both caps are observations from one machine and one version; the check is worth keeping because the failure mode is silent, but the numbers are yours to verify.
 
 ## License
 
