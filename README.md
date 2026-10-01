@@ -1,27 +1,65 @@
 # nk-memory-with-conditions
 
-![nk-memory-with-conditions](https://raw.githubusercontent.com/NickkkLian/nickkk-skills/main/gallery/social/nk-memory-with-conditions.png)
-
 An agent skill for [Claude Code](https://code.claude.com) and [OpenAI Codex](https://developers.openai.com/codex). Write agent memories that say when they hold, and keep the memory directory honest.
+
+**What you get.** One real run of nk-memory-with-conditions 0.1.4, copied from the terminal on 2026-09-30:
+
+```text
+$ python3 scripts/memguard.py --memory-dir demo --require-conditions
+memguard: demo
+  2 memory files · 2 index lines · MEMORY.md 74 chars (24,911 under the cap), 2 lines (198 under the line cap) · 2 without conditions
+🚨 A  index and files disagree: 2 files / 2 index lines
+     1 file(s) without an index line: ['staging.md']
+     → either another session's index write overwrote yours (whole-file rewrite), or a file was added without its line; check timestamps
+     1 index line(s) without a file: ['old-api.md']
+🚨 D  2 memory file(s) do not say when they hold (no 'Holds when:'): ['deploy.md', 'staging.md']
+```
+
+![nk-memory-with-conditions](https://raw.githubusercontent.com/NickkkLian/nickkk-skills/main/gallery/social/nk-memory-with-conditions.png)
 
 Part of [nickkk-skills](https://github.com/NickkkLian/nickkk-skills) — skills that stop an AI coding agent's
 "done, tested, safe" from being taken on faith.
+
+## Try it
+
+Nothing is installed and nothing under `~/.claude` changes: clone, run the self-test, run the example (it only writes inside the clone).
+
+```bash
+git clone https://github.com/NickkkLian/nk-memory-with-conditions && cd nk-memory-with-conditions
+python3 scripts/memguard.py --selftest
+mkdir -p demo
+printf -- '- [Deploy steps](deploy.md): how to ship\n- [Old API](old-api.md): retired\n' > demo/MEMORY.md
+printf 'Run make ship.\n' > demo/deploy.md && printf 'Use the staging key.\n' > demo/staging.md
+python3 scripts/memguard.py --memory-dir demo --require-conditions
+```
+
+The self-test prints:
+
+```text
+memguard selftest · 13/13 passed
+```
+
+The last command prints the block at the top of this page; its last line is the one below, and its exit code is 1 (non-zero on purpose: it found something).
+
+```text
+🚨 D  2 memory file(s) do not say when they hold (no 'Holds when:'): ['deploy.md', 'staging.md']
+```
 
 ![nk-memory-with-conditions demo: before and after](https://raw.githubusercontent.com/NickkkLian/nickkk-skills/main/gallery/nk-memory-with-conditions.gif)
 
 ## What it does
 
 - Template: every memory carries `**Holds when:**`, a dated why, and a checkable how-to-apply.
-- `scripts/memguard.py`: index ↔ files mismatch, headroom before the index is silently truncated (a character cap and a 200-line cap), memories without conditions, and sessions that share one memory directory (same cwd).
+- `scripts/memguard.py`: index ↔ files mismatch, memories without conditions, and sessions that share one memory directory (same cwd). It also reports the headroom under the documented load limit (200 lines or 25KB); a current Claude Code warns about that limit on its own, so this part is a second look.
 - Append-only and anchored-replace rules for directories several sessions write to.
 
 The full procedure, the boundaries and where the rules came from are in [SKILL.md](SKILL.md).
 
 ## How it works
 
-1. Conditions, not conclusions
-2. One example is not a rule
-3. Repeated mistakes are not memory failures
+1. Conditions, not conclusions. "The wrapped `grep` skips ignored files" is a conclusion; "holds when running inside this session's shell wrapper, not in a script" is the memory.
+2. One example is not a rule.
+3. Repeated mistakes are not memory failures.
 
 ## Why it is built this way
 
@@ -108,14 +146,20 @@ In this skill's Codex run, every call into the skill folder's scripts/ used that
 python3 scripts/memguard.py --selftest
 ```
 
-Standard library only, Python 3.9+. Before publishing, the guarded lines of each script were
-mutated one at a time in a sandbox copy and the self-test was confirmed to go red on the named
-assertion, without a traceback; the unmutated control stayed green.
+Standard library only, Python 3.9+. On 2026-09-30 every self-test above passed, and
+`breakcheck.py` from [nk-breakable-selftest](https://github.com/NickkkLian/nk-breakable-selftest) broke each script on purpose in a sandbox copy:
+
+- `memguard.py`: the one line the pattern matches is not covered: the self-test stayed green with L93 switched off.
+
+The unmutated control stayed green every time. Only lines that record a finding, raise, or return a failing exit code
+were broken (the tool's pattern, or the hand-written list); a line number refers to the script as shipped in this version.
+This shows those lines are covered. It does not show that nothing else can fail.
 
 ## Limits
 
 - It reads the directory; it cannot tell whether a condition is still true.
-- Both caps are observations from one machine and one version; the check is worth keeping because the failure mode is silent, but the numbers are yours to verify.
+- The cap check duplicates what a current Claude Code does on its own (see above); what the script adds is the other three checks: index and files that disagree, memories without a condition, and a shared directory.
+- The script counts characters, the documented limit is 25KB: close for plain English, not the same unit.
 
 ## License
 

@@ -19,14 +19,20 @@ Checks:
   D  conditions: every memory should say when it holds ("Holds when:", or one of its Chinese equivalents).
      Counted as a warning; red with --require-conditions                                                 → warn/red
 Exit: 0 clean · 1 red · 2 selftest failed / dir not found. --quiet prints nothing unless something is red.
-The default --limit (24,985 characters = 24.4 × 1024) is a measurement from one machine (four load snapshots,
-2026-09-14: 24,917 chars loaded fully, 29,800 truncated), not a documented number. Measure yours if it matters.
-The default --line-limit (200 lines) is also an observation: on 2026-09-29 Claude Code reported that a 203-line index
-was loaded only up to line 200. Whichever cap is reached first truncates the index.
+Both caps are documented: the Claude Code memory page (code.claude.com/docs/en/memory, read 2026-09-30) says the
+first 200 lines of MEMORY.md, or the first 25KB, whichever comes first, are loaded, and that Claude Code measures the
+file after each write and tells Claude to shorten it. Check B is therefore a second look, not the only one. The
+default --limit (24,985 characters) is a measurement from one machine (2026-09-14: 24,917 characters loaded fully,
+29,800 were cut); it counts characters, the documented limit is 25KB, so the two differ on non-ASCII text.
 """
 import os, re, sys, tempfile, time
 
 LIMIT, HEADROOM, BUSY_MIN = 24985, 240, 30
+
+
+def _n(n, word):
+    """'1 file', '2 files': a count with its noun in the right number"""
+    return f"{n:,} {word}{'' if n == 1 else 's'}"
 LINE_LIMIT, LINE_HEADROOM = 200, 5
 INDEX_RE = re.compile(r"^- \[[^\]]*\]\(([^)]+\.md)\)", re.M)
 COND_RE = re.compile(r"(?im)^(?:\*\*)?(?:holds when|valid when|applies when|成立条件)\b")
@@ -53,7 +59,7 @@ def check(mem, limit=LIMIT, headroom=HEADROOM, require_conditions=False, busy_mi
                              "lines": n_lines, "line_room": line_limit - n_lines}
     if only_file or only_idx:
         rc = 1
-        out.append(f"🚨 A  index and files disagree: {len(files)} files / {len(linked)} index lines")
+        out.append(f"🚨 A  index and files disagree: {_n(len(files), 'file')} / {_n(len(linked), 'index line')}")
         if only_file:
             out.append(f"     {len(only_file)} file(s) without an index line: {only_file[:5]}")
             out.append("     → either another session's index write overwrote yours (whole-file rewrite), or a file was added without its line; check timestamps")
@@ -170,7 +176,7 @@ def main(argv):
         return 0
     if not quiet:
         print(f"memguard: {mem}")
-        print(f"  {facts['files']} memory files · {facts['index']} index lines · MEMORY.md {facts['chars']:,} chars ({facts['room']:,} under the cap), {facts['lines']:,} lines ({facts['line_room']:,} under the line cap) · {facts['no_conditions']} without conditions")
+        print(f"  {_n(facts['files'], 'memory file')} · {_n(facts['index'], 'index line')} · MEMORY.md {facts['chars']:,} chars ({facts['room']:,} under the cap), {_n(facts['lines'], 'line')} ({facts['line_room']:,} under the line cap) · {facts['no_conditions']} without conditions")
     print("\n".join(l for l in out if not (quiet and l.startswith("📌"))))
     return rc
 

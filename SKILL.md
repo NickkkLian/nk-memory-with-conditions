@@ -4,7 +4,7 @@ description: Write agent memories that say when they hold, and keep the memory d
 license: MIT
 metadata:
   provenance: own practice (2026-07 to 2026-09); no external source
-  version: 0.1.3
+  version: 0.1.4
 ---
 # Memory with conditions
 
@@ -45,11 +45,15 @@ condition still holds. Memories about people and products go stale fastest; keep
 Claude Code keeps auto-memory under `<config dir>/projects/<cwd with / turned into ->/memory/`:
 `MEMORY.md` (an index, one line per memory) and one `.md` per memory. Two things about it are not obvious:
 
-- **The index is loaded up to a character cap and a line cap, and silently truncated at whichever comes first.**
-  It looks complete; the tail never loads. On one machine the character cap measured between 24,917 and 29,800
-  characters (four load snapshots, 2026-09-14); the script's default of 24,985 is that measurement, not a documented
-  number. The line cap is 200: on 2026-09-29 a 203-line index loaded only up to line 200. A short-line index hits
-  the line cap long before the character cap — measure yours if you get close to either.
+- **The index is loaded up to a size cap and a line cap, and cut at whichever comes first.** It looks complete;
+  the tail never loads. The limits are documented. The Claude Code memory page
+  (code.claude.com/docs/en/memory, read 2026-09-30) says: "The first 200 lines of `MEMORY.md`, or the first 25KB, whichever comes first, are loaded at the start of every conversation."
+  It also says that after a write Claude Code measures the file against both limits, reminds Claude to shorten it
+  when it is near one, and returns an error when it is over. So a current Claude Code watches the cap itself, and
+  the script's headroom check (B) is a second look: for an older version, for a file another program or a second
+  session wrote, or to see the headroom before the reminder. The script counts characters (default 24,985, a
+  measurement from 2026-09-14, before this page stated a number); the documented limit is 25KB, so on an index
+  with non-ASCII text the two can differ. Which version added the built-in reminder was not checked.
 - **The directory is keyed by cwd, not by session.** Two sessions in the same directory write the same
   files. A read-all → edit → write-all of `MEMORY.md` drops whatever the other session appended in between,
   with no error and a plausible line count.
@@ -74,8 +78,9 @@ the caps; `--quiet` for a session-start hook; `--require-conditions` to make mis
 ## Boundaries
 
 - It reads the directory; it cannot tell whether a condition is still true.
-- Both caps are observations from one machine and one version; the check is worth keeping
-  because the failure mode is silent, but the numbers are yours to verify.
+- The cap check duplicates what a current Claude Code does on its own (see above); what the script adds is
+  the other three checks: index and files that disagree, memories without a condition, and a shared directory.
+- The script counts characters, the documented limit is 25KB: close for plain English, not the same unit.
 
 ## Provenance
 
