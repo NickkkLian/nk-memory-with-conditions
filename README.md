@@ -1,3 +1,4 @@
+> Archived 2026-10-17: a plain prompt to a plain agent does this as well (fair test, 3 runs each). Kept for reference; no further updates.
 # nk-memory-with-conditions
 
 An agent skill for [Claude Code](https://code.claude.com) and [OpenAI Codex](https://developers.openai.com/codex). Write agent memories that say when they hold, and keep the memory directory honest.
