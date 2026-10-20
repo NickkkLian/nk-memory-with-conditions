@@ -4,7 +4,7 @@ description: Write agent memories that say when they hold, and keep the memory d
 license: MIT
 metadata:
   provenance: own practice (2026-07 to 2026-09); no external source
-  version: 0.1.4
+  version: 0.1.5
 ---
 # Memory with conditions
 
@@ -73,7 +73,9 @@ the caps; `--quiet` for a session-start hook; `--require-conditions` to make mis
 | A index ↔ files | a file has no index line, or a line has no file | a write was overwritten, or a rename/delete skipped the index |
 | B headroom | fewer than 240 characters remain under the character cap, or fewer than 5 lines under the 200-line cap | the next line you add may be the one that never loads |
 | C shared directory | (info only) ≥ 2 live sessions and recent memory writes | use append / anchored replace, not whole-file rewrites |
-| D conditions | `--require-conditions` and a memory lacks "Holds when:" | the memory will be read as a rule |
+| D conditions | `--require-conditions` and a memory lacks a condition heading or explicit prose applicability clause | the memory will be read as a rule |
+
+The sentinel also accepts explicit prose such as “This is only true while we are on the old cluster, until migration.” Dates, instructions and relative clauses alone do not qualify. Quoted examples and fenced code are ignored. This heuristic detects a stated condition; it cannot establish whether that condition is true. Prefer the template's `Holds when:` field when writing new memories.
 
 ## Boundaries
 

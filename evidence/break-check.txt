@@ -1,0 +1,52 @@
+$ python3 -B break_checks.py  # run from the parent job folder
+Mutation in scripts/memguard.py: 'or PROSE_COND_RE.search(text)' -> 'or False'
+Harness passed to python3 -B -c:
+import sys; sys.path.insert(0, "scripts"); import memguard as m
+try:
+    result = m.selftest()
+    if isinstance(result, tuple):
+        ok, lines = result; print("\n".join(lines)); sys.exit(0 if ok else 2)
+    sys.exit(result)
+except AssertionError:
+    print("Native self-test assertion failed: relocated verifier did not pass."); sys.exit(2)
+
+  ✔ control: 2 files / 2 index lines / conditions present → clean, no output
+  ✔ A: a file without an index line is red and named
+  ✔ A: an index line without a file is red and named
+  ✔ B: fewer than headroom chars left is red
+  ✔ B control: enough room is clean
+  ✔ B: fewer than line-headroom lines left is red
+  ✔ B control: enough lines left is clean
+  ✔ B: a 200-line index well under the character cap is red by the default line cap
+  ✔ D: missing 'Holds when' is a warning by default
+  ✔ D: --require-conditions makes it red
+  ✔ C: two live sessions + recent memory writes → info line, not red
+  ✘ D: prose applicability clause is a condition
+  ✔ D: a date and an instruction alone are not conditions
+  ✔ D: a relative clause is not an applicability condition
+  ✔ D: a code example alone is not a condition
+  ✔ a missing directory is exit 2, not a clean 0
+  ✔ memory_dir follows the cwd→directory mapping
+exit=2
+
+Restored control:
+memguard selftest · 17/17 passed
+  ✔ control: 2 files / 2 index lines / conditions present → clean, no output
+  ✔ A: a file without an index line is red and named
+  ✔ A: an index line without a file is red and named
+  ✔ B: fewer than headroom chars left is red
+  ✔ B control: enough room is clean
+  ✔ B: fewer than line-headroom lines left is red
+  ✔ B control: enough lines left is clean
+  ✔ B: a 200-line index well under the character cap is red by the default line cap
+  ✔ D: missing 'Holds when' is a warning by default
+  ✔ D: --require-conditions makes it red
+  ✔ C: two live sessions + recent memory writes → info line, not red
+  ✔ D: prose applicability clause is a condition
+  ✔ D: a date and an instruction alone are not conditions
+  ✔ D: a relative clause is not an applicability condition
+  ✔ D: a code example alone is not a condition
+  ✔ a missing directory is exit 2, not a clean 0
+  ✔ memory_dir follows the cwd→directory mapping
+exit=0
+Restored bytes match pre-mutation SHA-256: adf2c850975cfbdc396bdc7a6a43445488165cede6008aa294776bfb8d673ecf

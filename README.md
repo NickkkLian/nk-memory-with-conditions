@@ -1,4 +1,3 @@
-> Archived 2026-10-17: a plain prompt to a plain agent does this as well (fair test, 3 runs each). Kept for reference; no further updates.
 # nk-memory-with-conditions
 
 An agent skill for [Claude Code](https://code.claude.com) and [OpenAI Codex](https://developers.openai.com/codex). Write agent memories that say when they hold, and keep the memory directory honest.
@@ -37,7 +36,7 @@ python3 scripts/memguard.py --memory-dir demo --require-conditions
 The self-test prints:
 
 ```text
-memguard selftest · 13/13 passed
+memguard selftest · 17/17 passed
 ```
 
 The last command prints the block at the top of this page; its last line is the one below, and its exit code is 1 (non-zero on purpose: it found something).
@@ -69,6 +68,26 @@ The full procedure, the boundaries and where the rules came from are in [SKILL.m
 **Where it came from.** Own practice, 2026-07 to 2026-09: a memory written without its condition disabled a working tool; two sessions writing the same index on the same night; an index that loaded half-way with a warning nobody saw; a limit first assumed to be bytes and corrected to characters by measurement.
 
 **Evidence.** What was broken on purpose to show that the self-tests can fail is under [Verify](#verify); what was run end to end, and in which agent, is under [Compatibility](#compatibility).
+
+## Condition detection repair — 2026-10-20
+
+Condition headings and explicit prose applicability clauses are accepted. For example, “This is only true while we are on the old cluster, until migration” supplies a condition. Dates, generic instructions, relative clauses, quoted examples and code examples alone do not. Detection is a heuristic; the script cannot verify whether a condition still holds. File reads now close their handles explicitly.
+
+The earlier archive notice reflected a mechanical tie. The completed comparison below adds plain Claude and both judges; it supports continued maintenance on this benchmark. Repository unarchiving is a separate publication step.
+
+## Measured comparison — 2026-10-20
+
+**TOOL on this benchmark.** Plain Codex and plain Claude received the ordinary task prompt on the same cases and pinned inputs, without the benchmark skill. Both a Codex judge and a Claude judge assessed the artifacts using the native rubric and randomized blind labels. All three arms passed the full mechanical task 3/3; the measured advantage is in judged quality.
+
+| Arm | Original full passes | QA full passes | Original mean score | Codex judge | Claude judge | Agent seconds |
+| --- | --- | --- | --- | --- | --- | --- |
+| Repaired skill | 3/3 | 3/3 | 1.0000 | 0.9167 | 1.0000 / 1.0000 | 0.2 |
+| Plain Codex | 3/3 | 3/3 | 1.0000 | 0.7500 | 0.7500 | 162.9 |
+| Plain Claude | 3/3 | 3/3 | 1.0000 | 0.7500 | 0.7500 | 109.8 |
+
+Claude judge skill means are separate for the Codex-pair and Claude-pair contexts. These are paired ratings, not one pooled skill mean.
+
+The skill arm is three deterministic executions, not three model generations. Memory uses its native H1–H6 rubric. Only a clear win over both baselines under both judges qualifies as TOOL. No speed advantage is claimed. The small sample (n=3), task reuse, recognizable templates, same-family judges, paired judging contexts, different run dates and different agent caps limit generalization. Other tasks, models, agent versions and installation routes were not retested in this release job. The compatibility table below is historical, not a fresh compatibility claim. See [EVIDENCE.md](EVIDENCE.md) and [the measured records](evidence/cross-agent-2026-10-20.json) for settings and per-case ratings.
 
 ## Install
 
@@ -155,6 +174,8 @@ Standard library only, Python 3.9+. On 2026-09-30 every self-test above passed, 
 The unmutated control stayed green every time. Only lines that record a finding, raise, or return a failing exit code
 were broken (the tool's pattern, or the hand-written list); a line number refers to the script as shipped in this version.
 This shows those lines are covered. It does not show that nothing else can fail.
+
+Release checks on 2026-10-20: the expanded 17-check self-test and two regression tests pass with `ResourceWarning` treated as an error and no warning output. Disabling prose-condition recognition makes the native self-test fail; restoring the original bytes passes again. Raw commands and output: [release checks](evidence/release-tests.txt), [break check](evidence/break-check.txt). Run the regressions with `python3 -B -W error::ResourceWarning -m unittest discover -s tests -v`.
 
 ## Limits
 

@@ -26,6 +26,7 @@ default --limit (24,985 characters) is a measurement from one machine (2026-09-1
 29,800 were cut); it counts characters, the documented limit is 25KB, so the two differ on non-ASCII text.
 """
 import os, re, sys, tempfile, time
+from pathlib import Path
 
 LIMIT, HEADROOM, BUSY_MIN = 24985, 240, 30
 
@@ -36,6 +37,19 @@ def _n(n, word):
 LINE_LIMIT, LINE_HEADROOM = 200, 5
 INDEX_RE = re.compile(r"^- \[[^\]]*\]\(([^)]+\.md)\)", re.M)
 COND_RE = re.compile(r"(?im)^(?:\*\*)?(?:holds when|valid when|applies when|成立条件)\b")
+PROSE_COND_RE = re.compile(
+    r"(?i)\b(?:this|it|the (?:rule|fact|setting|behavio[u]?r))\s+"
+    r"(?:is\s+)?(?:only\s+)?(?:true|valid|applicable|applies|holds)\s+"
+    r"(?:only\s+)?(?:when|while|if|until)\s+\S+"
+)
+
+
+def has_condition(text):
+    """Accept named fields or an explicit prose applicability clause, not arbitrary dates."""
+    # Code samples and quoted examples are not conditions on the memory itself.
+    text = re.sub(r"(?ms)^\s*(```|~~~).*?^\s*\1\s*$", "", text)
+    text = "\n".join(line for line in text.splitlines() if not line.lstrip().startswith('>'))
+    return bool(COND_RE.search(text) or PROSE_COND_RE.search(text))
 
 
 def memory_dir(cwd=None, config_dir=None):
@@ -50,7 +64,8 @@ def check(mem, limit=LIMIT, headroom=HEADROOM, require_conditions=False, busy_mi
     idx = os.path.join(mem, "MEMORY.md")
     if not os.path.isfile(idx):
         return 2, [f"no MEMORY.md in {mem}"], {}
-    body = open(idx, encoding="utf-8").read()
+    with open(idx, encoding="utf-8") as fh:
+        body = fh.read()
     files = {f for f in os.listdir(mem) if f.endswith(".md") and f != "MEMORY.md"}
     linked = set(INDEX_RE.findall(body))
     only_file, only_idx = sorted(files - linked), sorted(linked - files)
@@ -77,7 +92,11 @@ def check(mem, limit=LIMIT, headroom=HEADROOM, require_conditions=False, busy_mi
         out.append(f"⚠️ B  MEMORY.md is {n_lines:,} lines; line cap {line_limit:,}; only {facts['line_room']:,} left")
         out.append(f"     lines past {line_limit} are silently not loaded — the index looks complete, its last lines never load")
         out.append("     → before adding a line, merge index lines that point to related memories, or move closed ones into a single 'closed' line")
-    missing = [f for f in sorted(files) if not COND_RE.search(open(os.path.join(mem, f), encoding="utf-8", errors="replace").read())]
+    missing = []
+    for f in sorted(files):
+        with open(os.path.join(mem, f), encoding="utf-8", errors="replace") as fh:
+            if not has_condition(fh.read()):
+                missing.append(f)
     facts["no_conditions"] = len(missing)
     if missing:
         if require_conditions:
@@ -104,15 +123,15 @@ def selftest():
     def mk(d, names, index_extra="", cond=True):
         os.makedirs(d, exist_ok=True)
         for n in names:
-            open(os.path.join(d, n + ".md"), "w").write("---\nname: %s\ndescription: x\n---\n\n%sbody\n" % (n, "**Holds when:** always.\n" if cond else ""))
-        open(os.path.join(d, "MEMORY.md"), "w").write("# Memory Index\n" + "".join(f"- [{n}]({n}.md) — hook\n" for n in names) + index_extra)
+            Path(d, n + ".md").write_text("---\nname: %s\ndescription: x\n---\n\n%sbody\n" % (n, "**Holds when:** always.\n" if cond else ""))
+        Path(d, "MEMORY.md").write_text("# Memory Index\n" + "".join(f"- [{n}]({n}.md) — hook\n" for n in names) + index_extra)
 
     with tempfile.TemporaryDirectory() as t:
         mem = os.path.join(t, "projects", "-x", "memory")
         mk(mem, ["a", "b"])
         rc, out, f = check(mem)
         chk(rc == 0 and not out and f["files"] == 2 and f["index"] == 2, "control: 2 files / 2 index lines / conditions present → clean, no output")
-        open(os.path.join(mem, "orphan.md"), "w").write("**Holds when:** always.\n")
+        Path(mem, "orphan.md").write_text("**Holds when:** always.\n")
         rc, out, f = check(mem)
         chk(rc == 1 and any("without an index line" in l and "orphan.md" in l for l in out), "A: a file without an index line is red and named")
         os.remove(os.path.join(mem, "orphan.md"))
@@ -120,11 +139,11 @@ def selftest():
         rc, out, _ = check(mem)
         chk(rc == 1 and any("without a file" in l and "ghost.md" in l for l in out), "A: an index line without a file is red and named")
         mk(mem, ["a", "b"])
-        rc, out, f = check(mem, limit=len(open(os.path.join(mem, "MEMORY.md")).read()) + 100, headroom=240)
+        rc, out, f = check(mem, limit=len(Path(mem, "MEMORY.md").read_text()) + 100, headroom=240)
         chk(rc == 1 and any(l.startswith("⚠️ B") for l in out), "B: fewer than headroom chars left is red")
-        rc, out, f = check(mem, limit=len(open(os.path.join(mem, "MEMORY.md")).read()) + 1000, headroom=240)
+        rc, out, f = check(mem, limit=len(Path(mem, "MEMORY.md").read_text()) + 1000, headroom=240)
         chk(rc == 0, "B control: enough room is clean")
-        n = len(open(os.path.join(mem, "MEMORY.md")).read().splitlines())
+        n = len(Path(mem, "MEMORY.md").read_text().splitlines())
         rc, out, f = check(mem, line_limit=n + 4, line_headroom=5)
         chk(rc == 1 and any(l.startswith("⚠️ B") and "lines" in l for l in out), "B: fewer than line-headroom lines left is red")
         rc, out, f = check(mem, line_limit=n + 5, line_headroom=5)
@@ -143,9 +162,14 @@ def selftest():
         mk(mem, ["a", "b"])
         proj = os.path.dirname(mem)
         for s in ("s1", "s2"):
-            open(os.path.join(proj, s + ".jsonl"), "w").write("{}\n")
+            Path(proj, s + ".jsonl").write_text("{}\n")
         rc, out, f = check(mem)
         chk(rc == 0 and f["live_sessions"] == 2 and any(l.startswith("📌 C") for l in out), "C: two live sessions + recent memory writes → info line, not red")
+        prose = "The database listens on port 5433. This is only true while we are on the old cluster, until migration."
+        chk(has_condition(prose), "D: prose applicability clause is a condition")
+        chk(not has_condition("Releases are on 11-02. Always ask the release owner."), "D: a date and an instruction alone are not conditions")
+        chk(not has_condition("The grep command skips files that are ignored."), "D: a relative clause is not an applicability condition")
+        chk(not has_condition('```\nHolds when: example\n```'), "D: a code example alone is not a condition")
         chk(check(os.path.join(t, "nowhere"))[0] == 2, "a missing directory is exit 2, not a clean 0")
         chk(memory_dir("/tmp/some/proj", os.path.join(t, "cfg")).endswith(os.path.join("projects", "-tmp-some-proj", "memory")), "memory_dir follows the cwd→directory mapping")
     return ok, lines

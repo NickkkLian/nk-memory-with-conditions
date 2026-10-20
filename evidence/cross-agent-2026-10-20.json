@@ -1,0 +1,1226 @@
+{
+  "mechanical": {
+    "skill": {
+      "attempts": 3,
+      "runs_done": 3,
+      "pass_count": 3,
+      "pass_rate": 1.0,
+      "mean_score": 1.0,
+      "wall_s": 0.22254520798742305,
+      "total_wall_s": 0.29883308300486533,
+      "tokens": null,
+      "runs_with_tokens": 0,
+      "recorded_runs": 0,
+      "statuses": {
+        "ok": 3
+      },
+      "messages": [],
+      "verdict": null
+    },
+    "codex": {
+      "attempts": 3,
+      "runs_done": 3,
+      "pass_count": 3,
+      "pass_rate": 1.0,
+      "mean_score": 1.0,
+      "wall_s": 162.94117254199955,
+      "total_wall_s": 164.76571399999375,
+      "tokens": {
+        "input_tokens": 289575,
+        "cached_input_tokens": 249728,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 8662,
+        "reasoning_output_tokens": 1691
+      },
+      "runs_with_tokens": 3,
+      "recorded_runs": 0,
+      "statuses": {
+        "ok": 3
+      },
+      "messages": [],
+      "verdict": null
+    },
+    "claude": {
+      "attempts": 3,
+      "runs_done": 3,
+      "pass_count": 3,
+      "pass_rate": 1.0,
+      "mean_score": 1.0,
+      "wall_s": 109.79034595898702,
+      "total_wall_s": 110.40468916596728,
+      "tokens": {
+        "input_tokens": 18,
+        "cache_creation_input_tokens": 50466,
+        "cache_read_input_tokens": 286879,
+        "output_tokens": 8512
+      },
+      "runs_with_tokens": 3,
+      "recorded_runs": 0,
+      "statuses": {
+        "ok": 3
+      },
+      "messages": [],
+      "verdict": null
+    }
+  },
+  "qa_passes": {
+    "skill": 3,
+    "codex": 3,
+    "claude": 3
+  },
+  "quality": {
+    "codex": {
+      "claude": {
+        "cases": {
+          "memory": {
+            "judged": 3,
+            "mean": 0.75
+          }
+        },
+        "mean": 0.75
+      },
+      "codex": {
+        "cases": {
+          "memory": {
+            "judged": 3,
+            "mean": 0.75
+          }
+        },
+        "mean": 0.75
+      },
+      "skill": {
+        "cases": {
+          "memory": {
+            "judged": 3,
+            "mean": 0.9166666666666666
+          }
+        },
+        "mean": 0.9166666666666666
+      }
+    },
+    "claude_pairs": {
+      "codex": {
+        "codex": {
+          "cases": {
+            "memory": {
+              "judged": 3,
+              "mean": 0.75
+            }
+          },
+          "mean": 0.75
+        },
+        "skill": {
+          "cases": {
+            "memory": {
+              "judged": 3,
+              "mean": 1.0
+            }
+          },
+          "mean": 1.0
+        }
+      },
+      "claude": {
+        "claude": {
+          "cases": {
+            "memory": {
+              "judged": 3,
+              "mean": 0.75
+            }
+          },
+          "mean": 0.75
+        },
+        "skill": {
+          "cases": {
+            "memory": {
+              "judged": 3,
+              "mean": 1.0
+            }
+          },
+          "mean": 1.0
+        }
+      }
+    },
+    "codex_supplement": {
+      "records": [
+        {
+          "blind": "c9efadc7ad64",
+          "task": "nk-memory-with-conditions",
+          "case": "memory",
+          "arm": "skill",
+          "run": "0001",
+          "label": null,
+          "mean": 0.9166666666666666,
+          "values": [
+            1,
+            1,
+            1,
+            1,
+            0.5,
+            1
+          ],
+          "details": {
+            "H1": {
+              "answer": "MET",
+              "evidence": "- \"**Holds when:** <the conditions under which this was observed to be true>\"; example: \"running inside this session's shell wrapper (not in a script, not with the system grep)\""
+            },
+            "H2": {
+              "answer": "MET",
+              "evidence": "- \"**Why:** <the incident or the instruction, dated; quote the person if it was an instruction>\"; example: \"observed 2026-09-14, one session, one project.\""
+            },
+            "H3": {
+              "answer": "MET",
+              "evidence": "- \"**How to apply:** <the checkable action next time; link related memories with [[their-slug]]>\"; example: \"run the same search with the system grep (`/usr/bin/grep -r`) or check `type grep`\""
+            },
+            "H4": {
+              "answer": "MET",
+              "evidence": "- \"Write what you saw; if you generalise, say it is a guess and name the sample size.\""
+            },
+            "H5": {
+              "answer": "PARTLY",
+              "evidence": "- \"`MEMORY.md` (an index, one line per memory) and one `.md` per memory\"; \"A read-all → edit → write-all of `MEMORY.md` drops whatever the other session appended in between\"; \"add by appending\" - Covers index entries and concurrent writes, but does not explicitly instruct updating the index together with the memory file."
+            },
+            "H6": {
+              "answer": "MET",
+              "evidence": "- \"**Holds when:** running inside this session's shell wrapper (not in a script, not with the system grep); observed 2026-09-14, one session, one project.\"; \"**Why:** a search for a string in `dist/` returned nothing and the string was there\"; \"**How to apply:** before trusting an empty search, run the same search with the system grep (`/usr/bin/grep -r`) or check `type grep`\""
+            }
+          },
+          "valid": true
+        },
+        {
+          "blind": "6145adfca00e",
+          "task": "nk-memory-with-conditions",
+          "case": "memory",
+          "arm": "skill",
+          "run": "0002",
+          "label": null,
+          "mean": 0.9166666666666666,
+          "values": [
+            1,
+            1,
+            1,
+            1,
+            0.5,
+            1
+          ],
+          "details": {
+            "H1": {
+              "answer": "MET",
+              "evidence": "- \"**Holds when:** <conditions: which tool, which version, which environment, which sample; the date>\"; \"**Holds when:** running inside this session's shell wrapper (not in a script, not with the system grep); observed 2026-09-14, one session, one project.\""
+            },
+            "H2": {
+              "answer": "MET",
+              "evidence": "- \"followed by why (the incident, dated)\"; \"observed 2026-09-14, one session, one project.\""
+            },
+            "H3": {
+              "answer": "MET",
+              "evidence": "- \"**How to apply:** <the checkable action next time; link related memories with [[their-slug]]>\"; \"before trusting an empty search, run the same search with the system grep (`/usr/bin/grep -r`) or check `type grep`\""
+            },
+            "H4": {
+              "answer": "MET",
+              "evidence": "- \"Write what you saw; if you generalise, say it is a guess and name the sample size.\""
+            },
+            "H5": {
+              "answer": "PARTLY",
+              "evidence": "- \"`MEMORY.md` (an index, one line per memory) and one `.md` per memory.\"; \"Two sessions in the same directory write the same files. A read-all → edit → write-all of `MEMORY.md` drops whatever the other session appended in between\" - Covers one line per memory and concurrent writes, but does not explicitly instruct updating the index together with the memory file."
+            },
+            "H6": {
+              "answer": "MET",
+              "evidence": "- \"**Holds when:** running inside this session's shell wrapper (not in a script, not with the system grep); observed 2026-09-14, one session, one project.\"; \"**Why:** a search for a string in `dist/` returned nothing and the string was there\"; \"**How to apply:** before trusting an empty search, run the same search with the system grep (`/usr/bin/grep -r`) or check `type grep`\""
+            }
+          },
+          "valid": true
+        },
+        {
+          "blind": "996a55d47ea2",
+          "task": "nk-memory-with-conditions",
+          "case": "memory",
+          "arm": "skill",
+          "run": "0003",
+          "label": null,
+          "mean": 0.9166666666666666,
+          "values": [
+            1,
+            1,
+            1,
+            1,
+            0.5,
+            1
+          ],
+          "details": {
+            "H1": {
+              "answer": "MET",
+              "evidence": "- \"**Holds when:** <the conditions under which this was observed to be true>\"; example: \"**Holds when:** running inside this session's shell wrapper (not in a script, not with the system grep)\""
+            },
+            "H2": {
+              "answer": "MET",
+              "evidence": "- \"**Why:** <the incident or the instruction, dated; quote the person if it was an instruction>\"; example: \"observed 2026-09-14, one session, one project.\""
+            },
+            "H3": {
+              "answer": "MET",
+              "evidence": "- \"**How to apply:** <the checkable action next time\"; example: \"before trusting an empty search, run the same search with the system grep (`/usr/bin/grep -r`) or check `type grep`\""
+            },
+            "H4": {
+              "answer": "MET",
+              "evidence": "- \"Write what you saw; if you generalise, say it is a guess and name the sample size.\""
+            },
+            "H5": {
+              "answer": "PARTLY",
+              "evidence": "- \"`MEMORY.md` (an index, one line per memory) and one `.md` per memory\"; \"Two sessions in the same directory write the same files. A read-all → edit → write-all of `MEMORY.md` drops whatever the other session appended in between\" - Missing an explicit instruction to update the index together with the memory file."
+            },
+            "H6": {
+              "answer": "MET",
+              "evidence": "- \"**Holds when:** running inside this session's shell wrapper (not in a script, not with the system grep); observed 2026-09-14, one session, one project.\"; \"**Why:** a search for a string in `dist/` returned nothing and the string was there\"; \"**How to apply:** before trusting an empty search, run the same search with the system grep (`/usr/bin/grep -r`) or check `type grep`\""
+            }
+          },
+          "valid": true
+        },
+        {
+          "blind": "1f3dcdf26078",
+          "task": "nk-memory-with-conditions",
+          "case": "memory",
+          "arm": "codex",
+          "run": "0001",
+          "label": null,
+          "mean": 0.8333333333333334,
+          "values": [
+            1,
+            1,
+            1,
+            0.5,
+            0.5,
+            1
+          ],
+          "details": {
+            "H1": {
+              "answer": "MET",
+              "evidence": "- \"State the fact and its conditions together.\" / \"**Holds when:** the application's active database configuration still targets the old cluster and specifies port 5433.\""
+            },
+            "H2": {
+              "answer": "MET",
+              "evidence": "- \"Record the evidence and why the fact matters.\" / \"**Evidence:** the existing db-port.md records the old-cluster port and a return to 5432 after the migration labeled \"11-02\".\" The example records the migration context motivating the memory."
+            },
+            "H3": {
+              "answer": "MET",
+              "evidence": "- \"Give a concrete check to perform before relying on the memory.\" / \"inspect the active database host and port in the configuration for the intended environment. If it confirms the old cluster on port 5433, use that port.\""
+            },
+            "H4": {
+              "answer": "PARTLY",
+              "evidence": "- \"Separate observed facts from assumptions\" - Distinguishes observations from assumptions, but does not explicitly address generalizing from one case or recording how many cases support a guess."
+            },
+            "H5": {
+              "answer": "PARTLY",
+              "evidence": "- \"add a concise index line to MEMORY.md using the file's relative path\" / \"Verify that the target exists and that every memory file has an index line.\" / \"keep the index synchronized\" - Does not address concurrent sessions writing to the shared memory directory or losing another session's index changes."
+            },
+            "H6": {
+              "answer": "MET",
+              "evidence": "- \"**Holds when:** the application's active database configuration still targets the old cluster and specifies port 5433.\" / \"**Evidence:** the existing db-port.md records the old-cluster port and a return to 5432 after the migration labeled \"11-02\". The year, date interpretation, and migration status have not been verified.\" / \"**How to apply:** inspect the active database host and port in the configuration for the intended environment.\""
+            }
+          },
+          "valid": true
+        },
+        {
+          "blind": "def46670dc39",
+          "task": "nk-memory-with-conditions",
+          "case": "memory",
+          "arm": "codex",
+          "run": "0002",
+          "label": null,
+          "mean": 0.75,
+          "values": [
+            1,
+            1,
+            1,
+            0,
+            0.5,
+            1
+          ],
+          "details": {
+            "H1": {
+              "answer": "MET",
+              "evidence": "- Guide: \"State **Holds when:** with observable conditions\"; example: \"**Holds when:** the specific endpoint being used is confirmed to remain on the old cluster and its effective connection configuration specifies port 5433.\""
+            },
+            "H2": {
+              "answer": "MET",
+              "evidence": "- Guide: \"Include **Source / evidence:** with the authoritative configuration, policy, or observation and its verification date.\"; example: \"**Source / evidence (2026-10-17):** the supplied db-port.md records the old-cluster port and the expected post-migration port.\""
+            },
+            "H3": {
+              "answer": "MET",
+              "evidence": "- Guide: \"Include **Before use:** with concrete checks of both the conditions and the fact.\"; example: \"For that host, use `pg_isready -h <confirmed-host> -p 5433` as a readiness check, replacing the placeholder.\""
+            },
+            "H4": {
+              "answer": "NOT MET",
+              "evidence": "- \"Record one focused fact or procedure.\" - No explicit instruction to avoid generalizing from one observation or to label a guess and state how many cases support it."
+            },
+            "H5": {
+              "answer": "PARTLY",
+              "evidence": "- \"Confirm every index target exists and every memory has an index line.\"; \"Update the evidence and conditions, or remove obsolete guidance and its index line together.\" - Covers index entries and coordinated maintenance, but omits concurrent sessions writing the shared directory and the risk of overwriting another session's changes."
+            },
+            "H6": {
+              "answer": "MET",
+              "evidence": "- \"**Holds when:** the specific endpoint being used is confirmed to remain on the old cluster and its effective connection configuration specifies port 5433.\"; \"**Source / evidence (2026-10-17):** the supplied db-port.md records the old-cluster port and the expected post-migration port.\"; \"**Before use:** confirm the endpoint's cluster and port in its current deployment or connection configuration.\""
+            }
+          },
+          "valid": true
+        },
+        {
+          "blind": "79c79763c9cc",
+          "task": "nk-memory-with-conditions",
+          "case": "memory",
+          "arm": "codex",
+          "run": "0003",
+          "label": null,
+          "mean": 0.6666666666666666,
+          "values": [
+            1,
+            0.5,
+            1,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "details": {
+            "H1": {
+              "answer": "MET",
+              "evidence": "- \"State the fact and its applicability conditions together.\"; \"**Holds when:** the current shell resolves `grep` to that wrapper and the wrapper's active configuration excludes ignored files.\""
+            },
+            "H2": {
+              "answer": "PARTLY",
+              "evidence": "- \"Record the evidence: the source, what was observed, and a full verification date such as YYYY-MM-DD.\" - The guide requires a date, but the example supplies no actual observation date, incident, or reason for writing the memory. Its evidence source alone does not establish these."
+            },
+            "H3": {
+              "answer": "MET",
+              "evidence": "- \"Give a concrete check before use and explain what result confirms the condition.\"; \"run `type grep`, inspect the identified alias, function, or wrapper and its ignore settings, and confirm behavior using a known ignored file containing a known search term.\""
+            },
+            "H4": {
+              "answer": "PARTLY",
+              "evidence": "- \"Record the evidence: the source, what was observed\"; \"Label assumptions or unverified claims honestly.\" - It asks for observations and honest labels, but does not explicitly prohibit generalizing from one case or require stating how many cases support a guess."
+            },
+            "H5": {
+              "answer": "PARTLY",
+              "evidence": "- \"save it as a descriptive `.md` filename in `./memdir` and add an index line in `MEMORY.md`\"; \"Keep links synchronized when renaming or removing files.\" - It covers index entries and coordinated maintenance, but omits concurrent sessions writing the shared directory and the risk of overwriting another session's index changes."
+            },
+            "H6": {
+              "answer": "PARTLY",
+              "evidence": "- \"**Holds when:** the current shell resolves `grep` to that wrapper and the wrapper's active configuration excludes ignored files.\"; \"**How to apply:** run `type grep`\"; \"After verification, record the full date, configuration source, and observed result here.\" - The example contains applicability conditions and a concrete check, but recording a date is only a future instruction; it supplies no actual date, incident, or reason for writing it."
+            }
+          },
+          "valid": true
+        },
+        {
+          "blind": "e8ed02c73673",
+          "task": "nk-memory-with-conditions",
+          "case": "memory",
+          "arm": "claude",
+          "run": "0001",
+          "label": null,
+          "mean": 0.75,
+          "values": [
+            1,
+            1,
+            1,
+            0,
+            0.5,
+            1
+          ],
+          "details": {
+            "H1": {
+              "answer": "MET",
+              "evidence": "- \"Say under what conditions the fact is true\"; \"**Holds when:** you work against the staging environment on the current cluster.\""
+            },
+            "H2": {
+              "answer": "MET",
+              "evidence": "- \"Add a `**Why (YYYY-MM-DD):**` line saying what happened and when you learned it.\"; \"**Why (2026-10-20):** a merge landed on staging without anyone running a deploy, which showed the auto-deploy is on.\""
+            },
+            "H3": {
+              "answer": "MET",
+              "evidence": "- \"Add a `**How to apply:**` line with a quick check that confirms the fact is still true before you rely on it\"; \"run `host staging.internal` and look at the last deploy time in the CI log.\""
+            },
+            "H4": {
+              "answer": "NOT MET",
+              "evidence": "- \"\" - No instruction to distinguish observations from general conclusions, or to label guesses and state how many cases support them."
+            },
+            "H5": {
+              "answer": "PARTLY",
+              "evidence": "- \"Add the index line to MEMORY.md in the same edit: `- [Title](file-name.md): one-line hook`.\" - Covers the index entry and coordinated update, but omits the hazard of concurrent sessions writing the same memory directory."
+            },
+            "H6": {
+              "answer": "MET",
+              "evidence": "- \"**Holds when:** you work against the staging environment on the current cluster.\"; \"**Why (2026-10-20):** a merge landed on staging without anyone running a deploy, which showed the auto-deploy is on.\"; \"**How to apply:** before relying on this, run `host staging.internal` and look at the last deploy time in the CI log. If either doesn't match, update this file.\""
+            }
+          },
+          "valid": true
+        },
+        {
+          "blind": "2a2c0e9690b5",
+          "task": "nk-memory-with-conditions",
+          "case": "memory",
+          "arm": "claude",
+          "run": "0002",
+          "label": null,
+          "mean": 0.75,
+          "values": [
+            1,
+            1,
+            1,
+            0,
+            0.5,
+            1
+          ],
+          "details": {
+            "H1": {
+              "answer": "MET",
+              "evidence": "- \"Add a `**Holds when:**` line naming the condition\"; example: \"**Holds when:** you run `make test-integration` on a local machine; CI starts the container itself.\""
+            },
+            "H2": {
+              "answer": "MET",
+              "evidence": "- \"Add a `**Why (YYYY-MM-DD):**` line giving the reason you learned it and the date.\"; example: \"**Why (2026-10-20):** a local test run timed out and looked like a code bug until the stopped container was found.\""
+            },
+            "H3": {
+              "answer": "MET",
+              "evidence": "- \"Add a `**Check:**` line with a command or a place to look that confirms the fact is still true.\"; example: \"**Check:** `docker ps --filter name=test-db` shows the container as Up.\""
+            },
+            "H4": {
+              "answer": "NOT MET",
+              "evidence": "- \"\" - No instruction to distinguish observations from general conclusions drawn from one case, or to label guesses and state their evidence count."
+            },
+            "H5": {
+              "answer": "PARTLY",
+              "evidence": "- \"Add one line to `MEMORY.md` in the existing form `- [Title](file.md): hook`.\"; \"When a fact stops holding, update the file or delete it *and* its index line together\" - Covers indexing and coordinated maintenance, but does not address several sessions writing the same directory or losing concurrent index changes."
+            },
+            "H6": {
+              "answer": "MET",
+              "evidence": "- \"**Holds when:** you run `make test-integration` on a local machine; CI starts the container itself.\"; \"**Why (2026-10-20):** a local test run timed out and looked like a code bug until the stopped container was found.\"; \"**Check:** `docker ps --filter name=test-db` shows the container as Up.\"; \"**How to apply:** before running the integration tests locally, run the check; if the container isn't up, start it with `docker start test-db`.\""
+            }
+          },
+          "valid": true
+        },
+        {
+          "blind": "6c420df18816",
+          "task": "nk-memory-with-conditions",
+          "case": "memory",
+          "arm": "claude",
+          "run": "0003",
+          "label": null,
+          "mean": 0.75,
+          "values": [
+            1,
+            1,
+            1,
+            0,
+            0.5,
+            1
+          ],
+          "details": {
+            "H1": {
+              "answer": "MET",
+              "evidence": "- \"Add a `**Holds when:**` line with the conditions\"; example: \"**Holds when:** you are targeting staging (not production), from 2026-10-20 until the planned move to the new staging cluster\"."
+            },
+            "H2": {
+              "answer": "MET",
+              "evidence": "- \"Add a `**Why (YYYY-MM-DD):**` line: what happened or who said so.\"; example: \"**Why (2026-10-20):** recorded during the memory audit; a manual deploy to staging had been run twice on top of the automatic one.\""
+            },
+            "H3": {
+              "answer": "MET",
+              "evidence": "- \"Add a `**How to apply:**` line with a command or place to look that shows whether the fact is still true.\"; example: \"To confirm the host is still current, run `getent hosts staging.internal`\"."
+            },
+            "H4": {
+              "answer": "NOT MET",
+              "evidence": "- \"\" - No instruction to distinguish observations from generalizations based on one case, or to label guesses and state their evidence count."
+            },
+            "H5": {
+              "answer": "PARTLY",
+              "evidence": "- \"Add an index line in MEMORY.md in the same change. Use the form `- [Title](file.md): one-line hook`.\" - Covers the index entry and coordinated update, but omits concurrent sessions writing the shared directory and the risk of losing another session's changes."
+            },
+            "H6": {
+              "answer": "MET",
+              "evidence": "- \"**Holds when:** you are targeting staging (not production), from 2026-10-20 until the planned move to the new staging cluster\"; \"**Why (2026-10-20):** recorded during the memory audit; a manual deploy to staging had been run twice on top of the automatic one.\"; \"To confirm the host is still current, run `getent hosts staging.internal`\"."
+            }
+          },
+          "valid": true
+        }
+      ],
+      "arms": {
+        "claude": {
+          "cases": {
+            "memory": {
+              "judged": 3,
+              "mean": 0.75
+            }
+          },
+          "mean": 0.75
+        },
+        "codex": {
+          "cases": {
+            "memory": {
+              "judged": 3,
+              "mean": 0.75
+            }
+          },
+          "mean": 0.75
+        },
+        "skill": {
+          "cases": {
+            "memory": {
+              "judged": 3,
+              "mean": 0.9166666666666666
+            }
+          },
+          "mean": 0.9166666666666666
+        }
+      },
+      "errors": [],
+      "complete": true
+    },
+    "claude_records": {
+      "codex": {
+        "records": [
+          {
+            "blind": "50295faddd41",
+            "task": "nk-memory-with-conditions",
+            "case": "memory",
+            "run": "0001",
+            "baseline": "codex",
+            "labels": {
+              "A": "skill",
+              "B": "codex"
+            },
+            "label": "A",
+            "arm": "skill",
+            "mean": 1.0,
+            "values": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "details": {
+              "H1": {
+                "answer": "MET",
+                "evidence": "- \"`**Holds when:** <the conditions under which this was observed to be true>`\" / example: \"**Holds when:** running inside this session's shell wrapper (not in a script, not with the system grep)\" -"
+              },
+              "H2": {
+                "answer": "MET",
+                "evidence": "- \"followed by why (the incident, dated)\" / example: \"observed 2026-09-14, one session, one project\" and \"**Why:** a search for a string in `dist/` returned nothing and the string was there\" -"
+              },
+              "H3": {
+                "answer": "MET",
+                "evidence": "- \"**How to apply:** <the checkable action next time; link related memories with [[their-slug]]>\" / example: \"run the same search with the system grep (`/usr/bin/grep -r`) or check `type grep`\" -"
+              },
+              "H4": {
+                "answer": "MET",
+                "evidence": "- \"**One example is not a rule.** Write what you saw; if you generalise, say it is a guess and name the sample size.\" -"
+              },
+              "H5": {
+                "answer": "MET",
+                "evidence": "- (a) \"`MEMORY.md` (an index, one line per memory)\" and \"Index line in `MEMORY.md`: `- [Title](file.md) — <hook: one clause, no summary>`\"; (b) \"Two sessions in the same directory write the same files. A read-all → edit → write-all of `MEMORY.md` drops whatever the other session appended in between\" and \"So: add by appending\" - The guide does not say outright that the index line must be updated in the same step as the file; that is only implied by putting the index line in the template."
+              },
+              "H6": {
+                "answer": "MET",
+                "evidence": "- example contains \"**Holds when:** ... observed 2026-09-14\", \"**Why:** a search for a string in `dist/` returned nothing\", \"**How to apply:** ... `/usr/bin/grep -r`\" -"
+              }
+            },
+            "valid": true
+          },
+          {
+            "blind": "50295faddd41",
+            "task": "nk-memory-with-conditions",
+            "case": "memory",
+            "run": "0001",
+            "baseline": "codex",
+            "labels": {
+              "A": "skill",
+              "B": "codex"
+            },
+            "label": "B",
+            "arm": "codex",
+            "mean": 0.8333333333333334,
+            "values": [
+              1,
+              1,
+              1,
+              0.5,
+              0.5,
+              1
+            ],
+            "details": {
+              "H1": {
+                "answer": "MET",
+                "evidence": "- \"State the fact and its conditions together. Identify the environment, configuration, version, role assignment, or temporary state that makes it true.\" / example: \"**Holds when:** the application's active database configuration still targets the old cluster and specifies port 5433.\" -"
+              },
+              "H2": {
+                "answer": "MET",
+                "evidence": "- \"Record the evidence and why the fact matters. Include the source and actual verification date when known, using YYYY-MM-DD.\" / example: \"**Evidence:** the existing db-port.md records the old-cluster port and a return to 5432 after the migration labeled \\\"11-02\\\".\" - The example gives the source but no observation date; it states that the date is unverified."
+              },
+              "H3": {
+                "answer": "MET",
+                "evidence": "- \"Give a concrete check to perform before relying on the memory. Identify the authoritative configuration or owner, the expected result, and what to do if the check disagrees.\" / example: \"inspect the active database host and port in the configuration for the intended environment. If it confirms the old cluster on port 5433, use that port.\" -"
+              },
+              "H4": {
+                "answer": "PARTLY",
+                "evidence": "- \"Separate observed facts from assumptions\" - It does not warn against drawing a general rule from one case, and it does not ask the writer to mark a generalisation as a guess or to state how many cases it rests on."
+              },
+              "H5": {
+                "answer": "PARTLY",
+                "evidence": "- \"add a concise index line to MEMORY.md using the file's relative path ... Verify that the target exists and that every memory file has an index line. When retiring a file, remove its index entry too.\" - (b) is missing. The guide does not mention that several sessions can write the same memory directory at once, or that a whole-file rewrite of the index can drop another session's lines."
+              },
+              "H6": {
+                "answer": "MET",
+                "evidence": "- example contains \"**Holds when:** the application's active database configuration still targets the old cluster\", \"**Evidence:** the existing db-port.md records ...\", \"**How to apply:** inspect the active database host and port in the configuration\" -"
+              }
+            },
+            "valid": true
+          },
+          {
+            "blind": "92c726d64edc",
+            "task": "nk-memory-with-conditions",
+            "case": "memory",
+            "run": "0002",
+            "baseline": "codex",
+            "labels": {
+              "A": "skill",
+              "B": "codex"
+            },
+            "label": "A",
+            "arm": "skill",
+            "mean": 1.0,
+            "values": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "details": {
+              "H1": {
+                "answer": "MET",
+                "evidence": "- \"`**Holds when:** <the conditions under which this was observed to be true>`\" / example: \"**Holds when:** running inside this session's shell wrapper (not in a script, not with the system grep)\" -"
+              },
+              "H2": {
+                "answer": "MET",
+                "evidence": "- \"followed by why (the incident, dated)\" / example: \"observed 2026-09-14, one session, one project\" and \"**Why:** a search for a string in `dist/` returned nothing and the string was there\" -"
+              },
+              "H3": {
+                "answer": "MET",
+                "evidence": "- \"**How to apply:** <the checkable action next time; ...>\" / example: \"run the same search with the system grep (`/usr/bin/grep -r`) or check `type grep`\" -"
+              },
+              "H4": {
+                "answer": "MET",
+                "evidence": "- \"**One example is not a rule.** Write what you saw; if you generalise, say it is a guess and name the sample size.\" -"
+              },
+              "H5": {
+                "answer": "MET",
+                "evidence": "- \"`MEMORY.md` (an index, one line per memory) and one `.md` per memory\" and \"Two sessions in the same directory write the same files. A read-all → edit → write-all of `MEMORY.md` drops whatever the other session appended in between ... So: add by appending\" - The guide does not say in so many words that the index line must be written at the same time as the file. The template does give the index line right after the memory file, which implies it."
+              },
+              "H6": {
+                "answer": "MET",
+                "evidence": "- example contains \"**Holds when:** ... observed 2026-09-14\", \"**Why:** a search for a string in `dist/` returned nothing\", and \"**How to apply:** ... (`/usr/bin/grep -r`)\" - All H1-H3 fields are present. Minor inconsistencies outside H1-H3: the type `env` is not in the template's type list, and the index filename `wrapped-grep.md` does not match the slug."
+              }
+            },
+            "valid": true
+          },
+          {
+            "blind": "92c726d64edc",
+            "task": "nk-memory-with-conditions",
+            "case": "memory",
+            "run": "0002",
+            "baseline": "codex",
+            "labels": {
+              "A": "skill",
+              "B": "codex"
+            },
+            "label": "B",
+            "arm": "codex",
+            "mean": 0.75,
+            "values": [
+              1,
+              1,
+              1,
+              0,
+              0.5,
+              1
+            ],
+            "details": {
+              "H1": {
+                "answer": "MET",
+                "evidence": "- \"State **Holds when:** with observable conditions such as the environment, active cluster, checked-out configuration, command wrapper, or current ownership policy.\" / example: \"**Holds when:** the specific endpoint being used is confirmed to remain on the old cluster\" -"
+              },
+              "H2": {
+                "answer": "MET",
+                "evidence": "- \"Include **Source / evidence:** with the authoritative configuration, policy, or observation and its verification date.\" / example: \"**Source / evidence (2026-10-17):** the supplied db-port.md records the old-cluster port\" -"
+              },
+              "H3": {
+                "answer": "MET",
+                "evidence": "- \"Include **Before use:** with concrete checks of both the conditions and the fact.\" / example: \"use `pg_isready -h <confirmed-host> -p 5433` as a readiness check\" -"
+              },
+              "H4": {
+                "answer": "NOT MET",
+                "evidence": "- \"Distinguish a copied note from a fact independently checked against the running system.\" - This line is about evidence provenance. The guide never tells the writer to record only what was observed rather than generalising from one case, and never asks them to flag a generalisation as a guess with its sample size. \"Do not apply this to other endpoints\" appears only in the example, not as guide instruction."
+              },
+              "H5": {
+                "answer": "PARTLY",
+                "evidence": "- \"add a short relative link in MEMORY.md using the exact filename ... Confirm every index target exists and every memory has an index line.\" and \"remove obsolete guidance and its index line together\" - Part (b) is missing: nothing about several sessions writing the same memory directory at once, or the risk that a whole-file rewrite of the index loses another session's lines."
+              },
+              "H6": {
+                "answer": "MET",
+                "evidence": "- example contains \"**Holds when:** ...\", \"**Source / evidence (2026-10-17):** ...\", and \"**Before use:** ... `pg_isready -h <confirmed-host> -p 5433`\" -"
+              }
+            },
+            "valid": true
+          },
+          {
+            "blind": "f75d8348bd24",
+            "task": "nk-memory-with-conditions",
+            "case": "memory",
+            "run": "0003",
+            "baseline": "codex",
+            "labels": {
+              "A": "codex",
+              "B": "skill"
+            },
+            "label": "A",
+            "arm": "codex",
+            "mean": 0.6666666666666666,
+            "values": [
+              1,
+              0.5,
+              1,
+              0.5,
+              0.5,
+              0.5
+            ],
+            "details": {
+              "H1": {
+                "answer": "MET",
+                "evidence": "- \"State the fact and its applicability conditions together. Identify the environment, configuration, version, owner, or system state that makes it true.\" / example: \"**Holds when:** the current shell resolves `grep` to that wrapper and the wrapper's active configuration excludes ignored files.\" -"
+              },
+              "H2": {
+                "answer": "PARTLY",
+                "evidence": "- \"Record the evidence: the source, what was observed, and a full verification date such as YYYY-MM-DD.\" / example: \"**Evidence:** the existing grep memory reports this behavior\" - The guide asks for a date, but the example has none. It defers it with \"After verification, record the full date\". The example names a source but no dated incident or observation."
+              },
+              "H3": {
+                "answer": "MET",
+                "evidence": "- \"Give a concrete check before use and explain what result confirms the condition.\" / example: \"run `type grep`, inspect the identified alias, function, or wrapper and its ignore settings, and confirm behavior using a known ignored file containing a known search term.\" -"
+              },
+              "H4": {
+                "answer": "PARTLY",
+                "evidence": "- \"Label assumptions or unverified claims honestly.\" / \"Avoid unconditional claims such as “always” for facts that can change.\" - The guide does not tell the writer to avoid generalizing from a single case. It also does not ask them to state how many cases a generalization rests on."
+              },
+              "H5": {
+                "answer": "PARTLY",
+                "evidence": "- \"save it as a descriptive `.md` filename in `./memdir` and add an index line in `MEMORY.md`... Keep links synchronized when renaming or removing files.\" - (b) is missing. The guide never mentions that several sessions may write the same directory at once, or that a whole-file rewrite of the index loses concurrent appends."
+              },
+              "H6": {
+                "answer": "PARTLY",
+                "evidence": "- \"**Holds when:** ...\", \"**Evidence:** ...\", \"**How to apply:** run `type grep`...\" - The example has a condition and a check. It lacks the verification date the guide requires (H2), and says so itself: \"After verification, record the full date\"."
+              }
+            },
+            "valid": true
+          },
+          {
+            "blind": "f75d8348bd24",
+            "task": "nk-memory-with-conditions",
+            "case": "memory",
+            "run": "0003",
+            "baseline": "codex",
+            "labels": {
+              "A": "codex",
+              "B": "skill"
+            },
+            "label": "B",
+            "arm": "skill",
+            "mean": 1.0,
+            "values": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "details": {
+              "H1": {
+                "answer": "MET",
+                "evidence": "- \"`**Holds when:** <the conditions under which this was observed to be true>`\" / example: \"**Holds when:** running inside this session's shell wrapper (not in a script, not with the system grep)\" -"
+              },
+              "H2": {
+                "answer": "MET",
+                "evidence": "- \"followed by why (the incident, dated)\" / example: \"observed 2026-09-14, one session, one project.\" and \"**Why:** a search for a string in `dist/` returned nothing and the string was there\" -"
+              },
+              "H3": {
+                "answer": "MET",
+                "evidence": "- \"**How to apply:** <the checkable action next time...>\" / example: \"run the same search with the system grep (`/usr/bin/grep -r`) or check `type grep`\" -"
+              },
+              "H4": {
+                "answer": "MET",
+                "evidence": "- \"**One example is not a rule.** Write what you saw; if you generalise, say it is a guess and name the sample size.\" -"
+              },
+              "H5": {
+                "answer": "MET",
+                "evidence": "- (a) \"`MEMORY.md` (an index, one line per memory) and one `.md` per memory\" and \"Index line in `MEMORY.md`: `- [Title](file.md) — <hook: one clause, no summary>`\"; (b) \"Two sessions in the same directory write the same files. A read-all → edit → write-all of `MEMORY.md` drops whatever the other session appended in between\" and \"So: add by appending\" -"
+              },
+              "H6": {
+                "answer": "MET",
+                "evidence": "- \"**Holds when:** running inside this session's shell wrapper ...; observed 2026-09-14\", \"**Why:** a search for a string in `dist/` returned nothing...\", \"**How to apply:** ... (`/usr/bin/grep -r`) or check `type grep`\" -"
+              }
+            },
+            "valid": true
+          }
+        ],
+        "arms": {
+          "codex": {
+            "cases": {
+              "memory": {
+                "judged": 3,
+                "mean": 0.75
+              }
+            },
+            "mean": 0.75
+          },
+          "skill": {
+            "cases": {
+              "memory": {
+                "judged": 3,
+                "mean": 1.0
+              }
+            },
+            "mean": 1.0
+          }
+        },
+        "errors": [],
+        "complete": true
+      },
+      "claude": {
+        "records": [
+          {
+            "blind": "aeba04d43837",
+            "task": "nk-memory-with-conditions",
+            "case": "memory",
+            "run": "0001",
+            "baseline": "claude",
+            "labels": {
+              "A": "claude",
+              "B": "skill"
+            },
+            "label": "A",
+            "arm": "claude",
+            "mean": 0.75,
+            "values": [
+              1,
+              1,
+              1,
+              0,
+              0.5,
+              1
+            ],
+            "details": {
+              "H1": {
+                "answer": "MET",
+                "evidence": "- \"Add a `**Holds when:**` line. Say under what conditions the fact is true (environment, branch, cluster, tool wrapper, role) and when it stops\" / example: \"**Holds when:** you work against the staging environment on the current cluster.\" -"
+              },
+              "H2": {
+                "answer": "MET",
+                "evidence": "- \"Add a `**Why (YYYY-MM-DD):**` line saying what happened and when you learned it.\" / example: \"**Why (2026-10-20):** a merge landed on staging without anyone running a deploy\" -"
+              },
+              "H3": {
+                "answer": "MET",
+                "evidence": "- \"Add a `**How to apply:**` line with a quick check that confirms the fact is still true before you rely on it (a command, a file to look at, a person to ask).\" / example: \"run `host staging.internal` and look at the last deploy time in the CI log\" -"
+              },
+              "H4": {
+                "answer": "NOT MET",
+                "evidence": "- no quote available - The guide never tells the writer to record what was observed rather than a general conclusion drawn from one case, or to mark a generalisation as a guess with its sample size. The example does the opposite: it concludes \"every merge to main deploys there automatically\" from a single merge."
+              },
+              "H5": {
+                "answer": "PARTLY",
+                "evidence": "- \"Add the index line to MEMORY.md in the same edit: `- [Title](file-name.md): one-line hook`.\" and \"update or delete the file and its index line together\" - Part (a) is covered. Part (b) is missing: nothing addresses several sessions writing the same memory directory at once, or the risk that a whole-file rewrite of the index drops another session's lines (append instead)."
+              },
+              "H6": {
+                "answer": "MET",
+                "evidence": "- \"**Holds when:** you work against the staging environment on the current cluster... **Why (2026-10-20):** a merge landed on staging... **How to apply:** before relying on this, run `host staging.internal`\" -"
+              }
+            },
+            "valid": true
+          },
+          {
+            "blind": "aeba04d43837",
+            "task": "nk-memory-with-conditions",
+            "case": "memory",
+            "run": "0001",
+            "baseline": "claude",
+            "labels": {
+              "A": "claude",
+              "B": "skill"
+            },
+            "label": "B",
+            "arm": "skill",
+            "mean": 1.0,
+            "values": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "details": {
+              "H1": {
+                "answer": "MET",
+                "evidence": "- \"`**Holds when:** <the conditions under which this was observed to be true>`\" and template \"<conditions: which tool, which version, which environment, which sample; the date>\" / example: \"**Holds when:** running inside this session's shell wrapper (not in a script, not with the system grep)\" -"
+              },
+              "H2": {
+                "answer": "MET",
+                "evidence": "- \"followed by why (the incident, dated)\" / example: \"observed 2026-09-14, one session, one project\" and \"**Why:** a search for a string in `dist/` returned nothing and the string was there\" -"
+              },
+              "H3": {
+                "answer": "MET",
+                "evidence": "- \"**How to apply:** <the checkable action next time; ...>\" / example: \"run the same search with the system grep (`/usr/bin/grep -r`) or check `type grep`\" -"
+              },
+              "H4": {
+                "answer": "MET",
+                "evidence": "- \"**One example is not a rule.** Write what you saw; if you generalise, say it is a guess and name the sample size.\" -"
+              },
+              "H5": {
+                "answer": "MET",
+                "evidence": "- \"`MEMORY.md` (an index, one line per memory)\" and \"Two sessions in the same directory write the same files. A read-all → edit → write-all of `MEMORY.md` drops whatever the other session appended in between... So: add by appending; ... never rewrite the whole index while another session may be writing\" - Part (a) is only implied, not stated outright: the guide never explicitly says to update the index in the same edit as the file."
+              },
+              "H6": {
+                "answer": "MET",
+                "evidence": "- \"**Holds when:** running inside this session's shell wrapper...; observed 2026-09-14, one session, one project. **Why:** a search for a string in `dist/` returned nothing... **How to apply:** before trusting an empty search, run the same search with the system grep (`/usr/bin/grep -r`)\" -"
+              }
+            },
+            "valid": true
+          },
+          {
+            "blind": "60aea9c55e79",
+            "task": "nk-memory-with-conditions",
+            "case": "memory",
+            "run": "0002",
+            "baseline": "claude",
+            "labels": {
+              "A": "skill",
+              "B": "claude"
+            },
+            "label": "A",
+            "arm": "skill",
+            "mean": 1.0,
+            "values": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "details": {
+              "H1": {
+                "answer": "MET",
+                "evidence": "- \"`**Holds when:** <the conditions under which this was observed to be true>`\" / template: \"**Holds when:** <conditions: which tool, which version, which environment, which sample; the date>\"; example: \"**Holds when:** running inside this session's shell wrapper (not in a script, not with the system grep); observed 2026-09-14, one session, one project.\" -"
+              },
+              "H2": {
+                "answer": "MET",
+                "evidence": "- \"followed by why (the incident, dated)\" / template: \"**Why:** <the incident or the instruction, dated; quote the person if it was an instruction>\"; example: \"observed 2026-09-14\" and \"**Why:** a search for a string in `dist/` returned nothing and the string was there\" -"
+              },
+              "H3": {
+                "answer": "MET",
+                "evidence": "- template: \"**How to apply:** <the checkable action next time; link related memories with [[their-slug]]>\"; example: \"before trusting an empty search, run the same search with the system grep (`/usr/bin/grep -r`) or check `type grep`\" -"
+              },
+              "H4": {
+                "answer": "MET",
+                "evidence": "- \"**One example is not a rule.** Write what you saw; if you generalise, say it is a guess and name the sample size.\" -"
+              },
+              "H5": {
+                "answer": "MET",
+                "evidence": "- (a) \"`MEMORY.md` (an index, one line per memory) and one `.md` per memory\" and \"Index line in `MEMORY.md`: `- [Title](file.md) — <hook: one clause, no summary>`\"; (b) \"Two sessions in the same directory write the same files. A read-all → edit → write-all of `MEMORY.md` drops whatever the other session appended in between\" and \"So: add by appending ... never rewrite the whole index while another session may be writing\" - The guide does not say in so many words to update the index in the same step as the file, but the template pairs an index line with each memory file."
+              },
+              "H6": {
+                "answer": "MET",
+                "evidence": "- example contains \"**Holds when:** ... observed 2026-09-14, one session, one project.\", \"**Why:** a search for a string in `dist/` returned nothing...\", \"**How to apply:** ... run the same search with the system grep (`/usr/bin/grep -r`)\" - All H1-H3 fields are present. Minor issues outside H1-H3: the example's `type: env` is not one of the template's listed types, and its index line points to `wrapped-grep.md` rather than a file matching the slug."
+              }
+            },
+            "valid": true
+          },
+          {
+            "blind": "60aea9c55e79",
+            "task": "nk-memory-with-conditions",
+            "case": "memory",
+            "run": "0002",
+            "baseline": "claude",
+            "labels": {
+              "A": "skill",
+              "B": "claude"
+            },
+            "label": "B",
+            "arm": "claude",
+            "mean": 0.75,
+            "values": [
+              1,
+              1,
+              1,
+              0,
+              0.5,
+              1
+            ],
+            "details": {
+              "H1": {
+                "answer": "MET",
+                "evidence": "- \"**Say when it holds.** Add a `**Holds when:**` line naming the condition: the environment, branch, version, cluster, team or period the fact depends on.\"; example: \"**Holds when:** you run `make test-integration` on a local machine; CI starts the container itself.\" -"
+              },
+              "H2": {
+                "answer": "MET",
+                "evidence": "- \"**Say why, with a date.** Add a `**Why (YYYY-MM-DD):**` line giving the reason you learned it and the date.\"; example: \"**Why (2026-10-20):** a local test run timed out and looked like a code bug until the stopped container was found.\" -"
+              },
+              "H3": {
+                "answer": "MET",
+                "evidence": "- \"**Give a way to check it.** Add a `**Check:**` line with a command or a place to look that confirms the fact is still true.\"; example: \"**Check:** `docker ps --filter name=test-db` shows the container as Up.\" -"
+              },
+              "H4": {
+                "answer": "NOT MET",
+                "evidence": "- (no quotable passage) - The guide never tells the writer to record what was observed rather than generalising from one case, or to mark a generalisation as a guess and state how many cases it rests on."
+              },
+              "H5": {
+                "answer": "PARTLY",
+                "evidence": "- \"**Index it right away.** Add one line to `MEMORY.md` in the existing form `- [Title](file.md): hook`.\" and \"delete it *and* its index line together\" - (a) is covered. (b) is missing: there is no mention that several sessions can write the same memory directory at once, and no warning that a whole-file rewrite of the index can drop another session's lines."
+              },
+              "H6": {
+                "answer": "MET",
+                "evidence": "- example contains \"**Holds when:** you run `make test-integration` on a local machine...\", \"**Why (2026-10-20):** a local test run timed out...\", \"**Check:** `docker ps --filter name=test-db` shows the container as Up.\" - All H1-H3 fields are present."
+              }
+            },
+            "valid": true
+          },
+          {
+            "blind": "6d84d978aa80",
+            "task": "nk-memory-with-conditions",
+            "case": "memory",
+            "run": "0003",
+            "baseline": "claude",
+            "labels": {
+              "A": "claude",
+              "B": "skill"
+            },
+            "label": "A",
+            "arm": "claude",
+            "mean": 0.75,
+            "values": [
+              1,
+              1,
+              1,
+              0,
+              0.5,
+              1
+            ],
+            "details": {
+              "H1": {
+                "answer": "MET",
+                "evidence": "- \"Add a `**Holds when:**` line with the conditions: environment (local or deployed), branch, cluster, version, and the end date if you know one.\" (example: \"**Holds when:** you are targeting staging (not production), from 2026-10-20 until the planned move to the new staging cluster\")"
+              },
+              "H2": {
+                "answer": "MET",
+                "evidence": "- \"Add a `**Why (YYYY-MM-DD):**` line: what happened or who said so.\" (example: \"**Why (2026-10-20):** recorded during the memory audit; a manual deploy to staging had been run twice on top of the automatic one.\")"
+              },
+              "H3": {
+                "answer": "MET",
+                "evidence": "- \"Add a `**How to apply:**` line with a command or place to look that shows whether the fact is still true.\" (example: \"run `getent hosts staging.internal`; if it doesn't resolve, this memory is stale\")"
+              },
+              "H4": {
+                "answer": "NOT MET",
+                "evidence": "- no quote available - The guide never tells the writer to record what was observed rather than a general conclusion from one case, and never asks the writer to mark a generalisation as a guess or to state how many cases it rests on."
+              },
+              "H5": {
+                "answer": "PARTLY",
+                "evidence": "- \"Add an index line in MEMORY.md in the same change. Use the form `- [Title](file.md): one-line hook`.\" - Part (a) is covered. Part (b) is missing: the guide says nothing about several sessions writing the same memory directory at once, or about a whole-file rewrite of the index dropping another session's lines (append instead)."
+              },
+              "H6": {
+                "answer": "MET",
+                "evidence": "- \"**Holds when:** you are targeting staging ... **Why (2026-10-20):** recorded during the memory audit ... **How to apply:** ... run `getent hosts staging.internal`\" - The example contains the condition, dated reason, and checkable step fields the guide asks for."
+              }
+            },
+            "valid": true
+          },
+          {
+            "blind": "6d84d978aa80",
+            "task": "nk-memory-with-conditions",
+            "case": "memory",
+            "run": "0003",
+            "baseline": "claude",
+            "labels": {
+              "A": "claude",
+              "B": "skill"
+            },
+            "label": "B",
+            "arm": "skill",
+            "mean": 1.0,
+            "values": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "details": {
+              "H1": {
+                "answer": "MET",
+                "evidence": "- \"The non-negotiable line is: `**Holds when:** <the conditions under which this was observed to be true>`\" and \"Conditions, not conclusions.\" (example: \"**Holds when:** running inside this session's shell wrapper (not in a script, not with the system grep); observed 2026-09-14, one session, one project.\")"
+              },
+              "H2": {
+                "answer": "MET",
+                "evidence": "- \"followed by why (the incident, dated)\"; template: \"**Why:** <the incident or the instruction, dated; quote the person if it was an instruction>\" (example: \"observed 2026-09-14\" and \"**Why:** a search for a string in `dist/` returned nothing and the string was there\")"
+              },
+              "H3": {
+                "answer": "MET",
+                "evidence": "- \"**How to apply:** <the checkable action next time; link related memories with [[their-slug]]>\" (example: \"run the same search with the system grep (`/usr/bin/grep -r`) or check `type grep`\")"
+              },
+              "H4": {
+                "answer": "MET",
+                "evidence": "- \"**One example is not a rule.** Write what you saw; if you generalise, say it is a guess and name the sample size.\""
+              },
+              "H5": {
+                "answer": "MET",
+                "evidence": "- (a) \"`MEMORY.md` (an index, one line per memory) and one `.md` per memory\" and \"Index line in `MEMORY.md`: `- [Title](file.md) — <hook: one clause, no summary>`\"; (b) \"Two sessions in the same directory write the same files. A read-all → edit → write-all of `MEMORY.md` drops whatever the other session appended in between\" and \"So: add by appending; ... never rewrite the whole index while another session may be writing\" - Both parts are covered. The guide does not literally say \"in the same change\", but the template pairs each memory with its index line."
+              },
+              "H6": {
+                "answer": "MET",
+                "evidence": "- \"**Holds when:** running inside this session's shell wrapper ... observed 2026-09-14, one session, one project. **Why:** a search for a string in `dist/` returned nothing ... **How to apply:** ... run the same search with the system grep (`/usr/bin/grep -r`)\" - The example contains the condition, the dated incident, and a checkable step. The date sits in the Holds when line rather than in the Why line."
+              }
+            },
+            "valid": true
+          }
+        ],
+        "arms": {
+          "claude": {
+            "cases": {
+              "memory": {
+                "judged": 3,
+                "mean": 0.75
+              }
+            },
+            "mean": 0.75
+          },
+          "skill": {
+            "cases": {
+              "memory": {
+                "judged": 3,
+                "mean": 1.0
+              }
+            },
+            "mean": 1.0
+          }
+        },
+        "errors": [],
+        "complete": true
+      }
+    },
+    "historical_codex": null
+  },
+  "comparisons": {
+    "Codex judge vs plain Codex": "WIN",
+    "Claude judge vs plain Codex": "WIN",
+    "Codex judge vs plain Claude": "WIN",
+    "Claude judge vs plain Claude": "WIN"
+  },
+  "verdict": "TOOL on this benchmark",
+  "quality_delta_threshold": 0.15
+}

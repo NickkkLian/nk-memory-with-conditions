@@ -1,0 +1,16 @@
+$ TMPDIR="$PWD/.tmp" python3 -B scripts/memguard.py --selftest
+memguard selftest · 13/13 passed
+  ✔ control: 2 files / 2 index lines / conditions present → clean, no output
+  ✔ A: a file without an index line is red and named
+  ✔ A: an index line without a file is red and named
+  ✔ B: fewer than headroom chars left is red
+  ✔ B control: enough room is clean
+  ✔ B: fewer than line-headroom lines left is red
+  ✔ B control: enough lines left is clean
+  ✔ B: a 200-line index well under the character cap is red by the default line cap
+  ✔ D: missing 'Holds when' is a warning by default
+  ✔ D: --require-conditions makes it red
+  ✔ C: two live sessions + recent memory writes → info line, not red
+  ✔ a missing directory is exit 2, not a clean 0
+  ✔ memory_dir follows the cwd→directory mapping
+exit=0
