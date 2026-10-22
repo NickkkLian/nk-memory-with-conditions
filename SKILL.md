@@ -4,7 +4,7 @@ description: Write agent memories that say when they hold, and keep the memory d
 license: MIT
 metadata:
   provenance: own practice (2026-07 to 2026-09); no external source
-  version: 0.1.5
+  version: 0.1.6
 ---
 # Memory with conditions
 

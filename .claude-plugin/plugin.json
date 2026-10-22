@@ -1,13 +1,14 @@
 {
   "name": "nk-memory-with-conditions",
   "description": "Write agent memories that say when they hold, and keep the memory directory honest.",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "author": {
     "name": "Nick Lian",
     "url": "https://github.com/NickkkLian"
   },
   "homepage": "https://github.com/NickkkLian/nk-memory-with-conditions",
   "repository": "https://github.com/NickkkLian/nk-memory-with-conditions",
+  "privacyPolicyUrl": "https://github.com/NickkkLian/nk-memory-with-conditions#privacy",
   "license": "MIT",
   "keywords": [
     "claude-code",

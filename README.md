@@ -183,6 +183,10 @@ Release checks on 2026-10-20: the expanded 17-check self-test and two regression
 - The cap check duplicates what a current Claude Code does on its own (see above); what the script adds is the other three checks: index and files that disagree, memories without a condition, and a shared directory.
 - The script counts characters, the documented limit is 25KB: close for plain English, not the same unit.
 
+## Privacy
+
+This skill's script runs on your computer, started by you or by the agent you use it in. `memguard.py` reads `MEMORY.md` and the memory files in your Claude Code memory folder for the project you are in (under `~/.claude`, or the folder named by `CLAUDE_CONFIG_DIR` or `--config-dir`), and the names and modification times of the session files next to it (not their contents). It prints file names, counts and the first 70 characters of the longest index lines, and writes nothing. Memory files can hold personal notes; the script keeps none of them. Nothing is sent anywhere: the script opens no network connection. The agent you run the skill in sends your conversation, including what the script prints, to its own model provider under your own sign-in; this skill does not. The author keeps no data.
+
 ## License
 
 MIT. Read a script before letting it run in your environment.
