@@ -19,7 +19,7 @@ Checks:
   D  conditions: every memory should say when it holds ("Holds when:", or one of its Chinese equivalents).
      Counted as a warning; red with --require-conditions                                                 → warn/red
 Exit: 0 clean · 1 red · 2 selftest failed / dir not found. --quiet prints nothing unless something is red.
-Both caps are documented: the Claude Code memory page (code.claude.com/docs/en/memory, read 2026-09-30) says the
+Both caps are documented: the memory page of the Claude Code documentation (read 2026-09-30) says the
 first 200 lines of MEMORY.md, or the first 25KB, whichever comes first, are loaded, and that Claude Code measures the
 file after each write and tells Claude to shorten it. Check B is therefore a second look, not the only one. The
 default --limit (24,985 characters) is a measurement from one machine (2026-09-14: 24,917 characters loaded fully,

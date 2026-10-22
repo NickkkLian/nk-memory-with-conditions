@@ -46,8 +46,8 @@ Claude Code keeps auto-memory under `<config dir>/projects/<cwd with / turned in
 `MEMORY.md` (an index, one line per memory) and one `.md` per memory. Two things about it are not obvious:
 
 - **The index is loaded up to a size cap and a line cap, and cut at whichever comes first.** It looks complete;
-  the tail never loads. The limits are documented. The Claude Code memory page
-  (code.claude.com/docs/en/memory, read 2026-09-30) says: "The first 200 lines of `MEMORY.md`, or the first 25KB, whichever comes first, are loaded at the start of every conversation."
+  the tail never loads. The limits are documented. The memory page of the Claude Code documentation
+  (read 2026-09-30) says: "The first 200 lines of `MEMORY.md`, or the first 25KB, whichever comes first, are loaded at the start of every conversation."
   It also says that after a write Claude Code measures the file against both limits, reminds Claude to shorten it
   when it is near one, and returns an error when it is over. So a current Claude Code watches the cap itself, and
   the script's headroom check (B) is a second look: for an older version, for a file another program or a second
